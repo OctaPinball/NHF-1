@@ -1,0 +1,6 @@
+#ifndef WAVE_H_INCLUDED
+#define WAVE_H_INCLUDED
+
+
+
+#endif // WAVE_H_INCLUDED
