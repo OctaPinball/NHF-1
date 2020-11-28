@@ -1,6 +1,6 @@
 #include "common.h"
 
-void game(void){
+void game(State *state){
     srand(time(0));
     /* ablak letrehozasa */
     SDL_Window *window;
@@ -10,10 +10,10 @@ void game(void){
     SDL_Event event;
     SDL_WaitEvent(&event);
 
-    Fonts fonts;
+    //Fonts fonts;
     TTF_Init();
-    fonts.hudfont = TTF_OpenFont("resources/pixel.ttf", 64);
-    if (!fonts.hudfont) {
+    TTF_Font *font = TTF_OpenFont("resources/pixel.ttf", 64);
+    if (!font) {
         SDL_Log("Nem sikerult megnyitni a fontot! %s\n", TTF_GetError());
         exit(1);
     }
@@ -71,7 +71,7 @@ void game(void){
 
         refreshScene(player, enemy, projectileArray, renderer);
 
-        drawhud(wavecontrol, fonts, renderer);
+        drawhud(wavecontrol, font, renderer);
 
         SDL_Delay(10);
 
@@ -83,8 +83,11 @@ void game(void){
     SDL_RemoveTimer(timers.firetimer);
     SDL_RemoveTimer(timers.enemyfiretimer);
     SDL_RemoveTimer(timers.respawntimer);
-    TTF_CloseFont(fonts.hudfont);
     free(projectileArray.data);
     free(enemy);
     SDL_Quit();
+    enterName(wavecontrol, font);
+
+    *state = inmenu;
+    TTF_CloseFont(font);
 }

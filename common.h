@@ -8,8 +8,9 @@
 #include <stdio.h>
 #include <math.h>
 #include <stdbool.h>
-#include "menu.h"
-#include "game.h"
+#include <time.h>
+#include <stdlib.h>
+
 #include "struct.h"
 #include "timer.h"
 #include "enemy.h"
@@ -18,8 +19,9 @@
 #include "player.h"
 #include "sdl_event.h"
 #include "wave.h"
-#include <time.h>
-#include <stdlib.h>
+#include "leaderboard.h"
+#include "menu.h"
+#include "game.h"
 
 #include "debugmalloc.h"
 

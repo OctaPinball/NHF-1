@@ -52,9 +52,21 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="enemy.h" />
+		<Unit filename="game.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="game.h" />
+		<Unit filename="leaderboard.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="leaderboard.h" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="menu.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="menu.h" />
 		<Unit filename="player.c">
 			<Option compilerVar="CC" />
 		</Unit>

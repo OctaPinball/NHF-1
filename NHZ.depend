@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1606560039 source:c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\main.c
+1606601185 source:c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\main.c
 
 1518375510 c:\program files\codeblocks\mingw\include\sdl2\sdl2_gfxprimitives.h
 	<math.h>
@@ -359,7 +359,7 @@
 	"begin_code.h"
 	"close_code.h"
 
-1606560255 c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\struct.h
+1606581543 c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\struct.h
 	"common.h"
 
 1606165009 c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\timer.h
@@ -372,7 +372,7 @@
 1606553097 source:c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\projectile.c
 	"common.h"
 
-1606553521 source:c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\render.c
+1606589994 source:c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\render.c
 	"common.h"
 
 1606554114 source:c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\enemy.c
@@ -380,7 +380,7 @@
 
 1606255983 c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\projectile.h
 
-1606552647 c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\render.h
+1606589994 c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\render.h
 
 1605205315 c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\debugmalloc.h
 	<stdbool.h>
@@ -422,7 +422,7 @@
 
 1606319772 c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\wave.h
 
-1606560143 c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\common.h
+1606581062 c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\common.h
 	<SDL2/SDL.h>
 	<SDL2/SDL2_gfxPrimitives.h>
 	<SDL2/SDL_image.h>
@@ -430,8 +430,8 @@
 	<stdio.h>
 	<math.h>
 	<stdbool.h>
-	"menu.h"
-	"game.h"
+	<time.h>
+	<stdlib.h>
 	"struct.h"
 	"timer.h"
 	"enemy.h"
@@ -440,8 +440,9 @@
 	"player.h"
 	"sdl_event.h"
 	"wave.h"
-	<time.h>
-	<stdlib.h>
+	"leaderboard.h"
+	"menu.h"
+	"game.h"
 	"debugmalloc.h"
 
 1561866798 c:\program files\codeblocks\mingw\include\sdl2\sdl_image.h
@@ -450,10 +451,18 @@
 	"begin_code.h"
 	"close_code.h"
 
-1606559650 c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\game.h
+1606577483 c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\game.h
 
-1606559681 source:c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\game.c
+1606591316 source:c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\game.c
 	"common.h"
 
-1606560245 c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\menu.h
+1606573056 c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\menu.h
+
+1606576380 source:c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\menu.c
+	"common.h"
+
+1606592608 c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\leaderboard.h
+
+1606603906 source:c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\leaderboard.c
+	"common.h"
 

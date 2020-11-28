@@ -6,16 +6,17 @@ typedef enum State
 {
     ingame,
     inmenu,
-    lineaderboard,
+    inleaderboard,
     gamend,
+    exitprogram,
 } State;
 
 typedef enum ButtonType
 {
-    new_game,
-    leaderboard,
-    exit,
-} State;
+    b_new_game,
+    b_leaderboard,
+    b_exit,
+} ButtonType;
 
 typedef enum ProjectileType
 {
@@ -25,7 +26,11 @@ typedef enum ProjectileType
     fast
 } ProjectileType;
 
-typedef struct Buttons
+typedef struct Player
+{
+    char name[30];
+    int score;
+} Player;
 
 typedef struct renderValues
 {
@@ -33,6 +38,13 @@ typedef struct renderValues
     int y;
     SDL_Texture *texture;
 } renderValues;
+
+typedef struct Buttons
+{
+    renderValues button1;
+    renderValues button2;
+    renderValues button3;
+} Buttons;
 
 typedef struct Creature
 {
