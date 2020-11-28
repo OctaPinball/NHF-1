@@ -1,11 +1,4 @@
-#include <SDL2/SDL.h>
-#include <SDL2/SDL2_gfxPrimitives.h>
-#include "struct.h"
-#include <stdbool.h>
-#include "projectile.h"
-#include "enemy.h"
-
-#include "debugmalloc.h"
+#include "common.h"
 
 void checkEvents(WaveControl *wavecontrol, Controls *input, MoveNumbers *enemymoves, Creature **enemy, ProjectileArray *projectileArray, Creature *player){
     SDL_Event event;

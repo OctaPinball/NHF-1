@@ -1,12 +1,4 @@
-#include <SDL2/SDL.h>
-#include <SDL2/SDL2_gfxPrimitives.h>
-#include <stdlib.h>
-#include "struct.h"
-#include "projectile.h"
-#include "enemy.h"
-#include <stdio.h>
-
-#include "debugmalloc.h"
+#include "common.h"
 
 Uint32 movetime(Uint32 ms, void *param)
 {
@@ -50,6 +42,14 @@ Uint32 respawntime(Uint32 ms, void *param)
 
 void refreshTimers(Timers *timers, WaveControl *wavecontrol)
 {
+    if (timers->refreshWaveTimers == true)
+    {
+        SDL_RemoveTimer(timers->movetimer);
+        timers->movetimer = SDL_AddTimer(timers->movetimernewvalue, movetime, NULL);
+        SDL_RemoveTimer(timers->enemyfiretimer);
+        timers->enemyfiretimer = SDL_AddTimer(timers->enemyfiretimernewvalue, enemyfiretime, NULL);
+        timers->refreshWaveTimers = false;
+    }
     if(wavecontrol->firetime != timers->firetimermemory)
     {
     SDL_RemoveTimer(timers->firetimer);

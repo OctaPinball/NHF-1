@@ -46,6 +46,7 @@
 			<Add library="dxguid" />
 			<Add directory="C:/Program Files/CodeBlocks/MinGW/lib" />
 		</Linker>
+		<Unit filename="common.h" />
 		<Unit filename="debugmalloc.h" />
 		<Unit filename="enemy.c">
 			<Option compilerVar="CC" />
@@ -75,6 +76,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="timer.h" />
+		<Unit filename="wave.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="wave.h" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>

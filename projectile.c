@@ -1,16 +1,8 @@
-#include <SDL2/SDL.h>
-#include <SDL2/SDL2_gfxPrimitives.h>
-#include "struct.h"
-#include "render.h"
-#include <stdio.h>
-#include <math.h>
-#include <stdbool.h>
-#include <stdlib.h>
-
-#include "debugmalloc.h"
+#include "common.h"
 
 void deleteProjectile(ProjectileArray *projectileArray, int idx)
 {
+    SDL_DestroyTexture(projectileArray->data[idx].render.texture);
     Projectile *ujtomb = (Projectile*)malloc(((projectileArray->scale) - 1) * sizeof(Projectile));
     int j = 0;
     for (int i = 0; i < projectileArray->scale; i++)
@@ -197,23 +189,19 @@ bool detectProjectilePath(Creature *enemy, int i)
 
 void enemyfire(WaveControl *wavecontrol, Creature **enemy, ProjectileArray *projectileArray, SDL_Renderer *renderer)
 {
-    if (wavecontrol->enemyfireready == true)
+    if (wavecontrol->enemyfireready == true && enemyalive(enemy))
     {
-        int i = rand()%30;
-        int j = i;
+        int i;
         while(true)
         {
-            i++;
-            if (i == 30)
-                i = 0;
+            i = rand()%30;
             if ((*enemy)[i].alive == true && detectProjectilePath(*enemy, i) == true)
             {
-                createProjectile((*enemy)[i], &(*projectileArray), renderer);
                 break;
             }
-            if (j == i)
-                break;
+
         }
+        createProjectile((*enemy)[i], &(*projectileArray), renderer);
         wavecontrol->enemyfireready = false;
     }
 }

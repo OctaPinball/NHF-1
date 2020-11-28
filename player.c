@@ -1,11 +1,5 @@
-#include <SDL2/SDL.h>
-#include <SDL2/SDL2_gfxPrimitives.h>
-#include "struct.h"
-#include <stdbool.h>
-#include "time.h"
-#include "render.h"
+#include "common.h"
 
-#include "debugmalloc.h"
 
 
 void movePlayer(Controls input, Creature *player){

@@ -1,9 +1,21 @@
 #ifndef STRUCT_H_INCLUDED
 #define STRUCT_H_INCLUDED
-#include <SDL2/SDL.h>
-#include <SDL2/SDL2_gfxPrimitives.h>
-#include <stdbool.h>
-#include <SDL2/SDL_ttf.h>
+#include "common.h"
+
+typedef enum State
+{
+    ingame,
+    inmenu,
+    lineaderboard,
+    gamend,
+} State;
+
+typedef enum ButtonType
+{
+    new_game,
+    leaderboard,
+    exit,
+} State;
 
 typedef enum ProjectileType
 {
@@ -12,6 +24,8 @@ typedef enum ProjectileType
     medium,
     fast
 } ProjectileType;
+
+typedef struct Buttons
 
 typedef struct renderValues
 {
@@ -58,11 +72,14 @@ typedef struct WaveControl
 
 typedef struct Timers
 {
+    bool refreshWaveTimers;
     SDL_TimerID movetimer;
+    int movetimernewvalue;
     SDL_TimerID projectiletimer;
     SDL_TimerID firetimer;
     int firetimermemory;
     SDL_TimerID enemyfiretimer;
+    int enemyfiretimernewvalue;
     SDL_TimerID respawntimer;
     int respawntimermemory;
     int respawntimernewvalue;

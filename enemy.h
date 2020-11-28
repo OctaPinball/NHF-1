@@ -3,5 +3,6 @@
 
 void spawnWave(Creature **enemy, SDL_Renderer *renderer);
 void moveEnemy(MoveNumbers *enemymove, Creature **enemy);
+bool enemyalive(Creature **enemy);
 
 #endif // ENEMY_H_INCLUDED

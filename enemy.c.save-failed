@@ -11,8 +11,6 @@ void spawnWave(Creature **enemy, SDL_Renderer *renderer)
             (*enemy)[(i * 10 + j)].render.x = j * 64;
             (*enemy)[(i * 10 + j)].render.y = i * 64;
             (*enemy)[(i * 10 + j)].alive = true;
-            if ((*enemy)[(i * 10 + j)].render.texture != NULL)
-                SDL_DestroyTexture((*enemy)[(i * 10 + j)].render.texture);
             switch (i)
             {
             case 0:

@@ -1,10 +1,4 @@
-#include <SDL2/SDL.h>
-#include <SDL2/SDL2_gfxPrimitives.h>
-#include "struct.h"
-#include <stdbool.h>
-#include <string.h>
-
-#include "debugmalloc.h"
+#include "common.h"
 
 void draw(renderValues render, SDL_Renderer *renderer)
 {
@@ -26,7 +20,8 @@ void textdraw(renderValues source ,char *text, Fonts fonts, SDL_Renderer *render
     source.texture = SDL_CreateTextureFromSurface(renderer, felirat);
 
     draw(source, renderer);
-
+    SDL_FreeSurface(felirat);
+    SDL_DestroyTexture(source.texture);
     /*
     hova.x = (480 - felirat->w) / 2;
     hova.y = 60;
@@ -41,6 +36,8 @@ void textdraw(renderValues source ,char *text, Fonts fonts, SDL_Renderer *render
 void drawhud(WaveControl wavecontrol, Fonts fonts, SDL_Renderer *renderer){
     //boxRGBA(renderer, 0, 720, 1280, 784, 100, 0, 0, 0);
     //thickLineRGBA(renderer, 0, 720, 1280, 720, 5, 255, 255, 255, 0);
+    //clearhud()
+
     renderValues score = {10, 720, NULL};
     renderValues life = {1000, 720, NULL};
     renderValues wave = {600, 720, NULL};
@@ -74,7 +71,23 @@ void refreshScene(Creature player, Creature *enemy, ProjectileArray projectileAr
     //SDL_RenderPresent(renderer);
 }
 
-
+void prepareScene(Creature player, Creature *enemy, ProjectileArray projectileArray, SDL_Renderer *renderer){
+{
+    SDL_DestroyTexture(player.render.texture);
+    for (int i = 0; i < 30; i++)
+    {
+        if (enemy[i].alive == true)
+        {
+            draw(enemy[i].render, renderer);
+        }
+    }
+    for (int i = 0; i < projectileArray.scale; i++)
+    {
+        draw(projectileArray.data[i].render, renderer);
+    }
+    SDL_RenderClear(renderer);
+}
+}
 
 /* ablak letrehozasa */
 void sdl_init(char const *felirat, int szeles, int magas, SDL_Window **pwindow, SDL_Renderer **prenderer)

@@ -1,20 +1,5 @@
 # depslib dependency file v1.0
-1606258346 source:c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\main.c
-	<SDL2/SDL2_gfxPrimitives.h>
-	<stdio.h>
-	<math.h>
-	<stdbool.h>
-	"struct.h"
-	"timer.h"
-	"enemy.h"
-	"projectile.h"
-	"render.h"
-	"player.h"
-	"sdl_event.h"
-	<time.h>
-	<SDL2/SDL_ttf.h>
-	<stdlib.h>
-	"debugmalloc.h"
+1606560039 source:c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\main.c
 
 1518375510 c:\program files\codeblocks\mingw\include\sdl2\sdl2_gfxprimitives.h
 	<math.h>
@@ -374,55 +359,28 @@
 	"begin_code.h"
 	"close_code.h"
 
-1606245183 c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\struct.h
-	<SDL2/SDL.h>
-	<SDL2/SDL2_gfxPrimitives.h>
-	<stdbool.h>
-	<SDL2/SDL_ttf.h>
+1606560255 c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\struct.h
+	"common.h"
 
 1606165009 c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\timer.h
 
-1606229388 source:c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\timer.c
-	<SDL2/SDL.h>
-	<SDL2/SDL2_gfxPrimitives.h>
-	<stdlib.h>
-	"struct.h"
-	"projectile.h"
-	"enemy.h"
-	<stdio.h>
-	"debugmalloc.h"
+1606490779 source:c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\timer.c
+	"common.h"
 
-1605353923 c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\enemy.h
+1606319468 c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\enemy.h
 
-1606259049 source:c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\projectile.c
-	<SDL2/SDL.h>
-	<SDL2/SDL2_gfxPrimitives.h>
-	"struct.h"
-	"render.h"
-	<stdio.h>
-	<math.h>
-	<stdbool.h>
-	<stdlib.h>
-	"debugmalloc.h"
+1606553097 source:c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\projectile.c
+	"common.h"
 
-1606257767 source:c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\render.c
-	<SDL2/SDL.h>
-	<SDL2/SDL2_gfxPrimitives.h>
-	"struct.h"
-	<stdbool.h>
-	<string.h>
-	"debugmalloc.h"
+1606553521 source:c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\render.c
+	"common.h"
 
-1606145411 source:c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\enemy.c
-	"struct.h"
-	"render.h"
-	<stdbool.h>
-	<time.h>
-	"debugmalloc.h"
+1606554114 source:c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\enemy.c
+	"common.h"
 
 1606255983 c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\projectile.h
 
-1606245452 c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\render.h
+1606552647 c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\render.h
 
 1605205315 c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\debugmalloc.h
 	<stdbool.h>
@@ -444,25 +402,13 @@
 
 1605632728 c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\input.h
 
-1606257742 source:c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\player.c
-	<SDL2/SDL.h>
-	<SDL2/SDL2_gfxPrimitives.h>
-	"struct.h"
-	<stdbool.h>
-	"time.h"
-	"render.h"
-	"debugmalloc.h"
+1606490743 source:c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\player.c
+	"common.h"
 
 1606257685 c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\player.h
 
-1606257726 source:c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\sdl_event.c
-	<SDL2/SDL.h>
-	<SDL2/SDL2_gfxPrimitives.h>
-	"struct.h"
-	<stdbool.h>
-	"projectile.h"
-	"enemy.h"
-	"debugmalloc.h"
+1606490734 source:c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\sdl_event.c
+	"common.h"
 
 1606163939 c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\sdl_event.h
 
@@ -471,5 +417,43 @@
 	"begin_code.h"
 	"close_code.h"
 
-1606258291 source:c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\wave.c
+1606554262 source:c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\wave.c
+	"common.h"
+
+1606319772 c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\wave.h
+
+1606560143 c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\common.h
+	<SDL2/SDL.h>
+	<SDL2/SDL2_gfxPrimitives.h>
+	<SDL2/SDL_image.h>
+	<SDL2/SDL_ttf.h>
+	<stdio.h>
+	<math.h>
+	<stdbool.h>
+	"menu.h"
+	"game.h"
+	"struct.h"
+	"timer.h"
+	"enemy.h"
+	"projectile.h"
+	"render.h"
+	"player.h"
+	"sdl_event.h"
+	"wave.h"
+	<time.h>
+	<stdlib.h>
+	"debugmalloc.h"
+
+1561866798 c:\program files\codeblocks\mingw\include\sdl2\sdl_image.h
+	"SDL.h"
+	"SDL_version.h"
+	"begin_code.h"
+	"close_code.h"
+
+1606559650 c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\game.h
+
+1606559681 source:c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\game.c
+	"common.h"
+
+1606560245 c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\menu.h
 
