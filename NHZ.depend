@@ -422,7 +422,7 @@
 
 1606646252 c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\wave.h
 
-1606581062 c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\common.h
+1606652101 c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\common.h
 	<SDL2/SDL.h>
 	<SDL2/SDL2_gfxPrimitives.h>
 	<SDL2/SDL_image.h>
@@ -432,6 +432,7 @@
 	<stdbool.h>
 	<time.h>
 	<stdlib.h>
+	<string.h>
 	"struct.h"
 	"timer.h"
 	"enemy.h"

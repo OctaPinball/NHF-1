@@ -10,6 +10,7 @@
 #include <stdbool.h>
 #include <time.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "struct.h"
 #include "timer.h"
