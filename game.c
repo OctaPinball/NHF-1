@@ -1,75 +1,74 @@
 #include "common.h"
 
+void initiatevariables(ProjectileArray *projectileArray, Creature *player, Enemies *enemystruct, Timers *timers, SDL_Renderer *renderer) //Változók értékadása
+{
+    //Lövedékek
+    projectileArray->data = (Projectile*) malloc(0 * sizeof(Projectile));
+    projectileArray->scale = 0;
+
+    //Játékos
+    player->render.x = 704;
+    player->render.y = 648;
+    player->emitter = ship;
+    player->render.texture = loadTexture("resources/ship.png", renderer);
+    player->alive = true;
+
+    //Ellenfelek
+    for(int i = 0; i < 30; i++)
+    {
+        enemystruct->enemy[i].render.texture = NULL;
+        enemystruct->enemy[i].alive = false;
+    }
+    enemystruct->movenumbers.moveline = 0;
+    enemystruct->movenumbers.movexcount = 0;
+    enemystruct->movenumbers.movexdirection = 1;
+
+    //Időzítők
+    timers->refreshWaveTimers = false;
+    timers->movetimernewvalue = 500;
+    timers->projectiletimer = SDL_AddTimer(50, projectiletime, NULL);
+    timers->firetimer = SDL_AddTimer(200, firetime, NULL);
+    timers->firetimermemory = 200;
+    timers->enemyfiretimernewvalue = 100;
+    timers->respawntimermemory = 0;
+}
+
 void game(State *state){
     srand(time(0));
     /* ablak letrehozasa */
     SDL_Window *window;
     SDL_Renderer *renderer;
-    sdl_init("SPACE INVADERS", 1280, 784, &window, &renderer);
+    TTF_Font *font;
+    sdl_init("SPACE INVADERS", 1280, 784, &window, &renderer, &font);
 
-    SDL_Event event;
-    SDL_WaitEvent(&event);
-
-    //Fonts fonts;
-    TTF_Init();
-    TTF_Font *font = TTF_OpenFont("resources/pixel.ttf", 64);
-    if (!font) {
-        SDL_Log("Nem sikerult megnyitni a fontot! %s\n", TTF_GetError());
-        exit(1);
-    }
-
+    //Változók létrehozása
     ProjectileArray projectileArray;
-    projectileArray.data = (Projectile*) malloc(0 * sizeof(Projectile));
-    projectileArray.scale = 0;
-
     Creature player;
-    MoveNumbers enemymoves = {0, 1};
-    player.render.x = 704;
-    player.render.y = 648;
-    player.emitter = ship;
-    player.render.texture = loadTexture("resources/ship.png", renderer);
-    player.alive = true;
-    Creature *enemy = (Creature*) malloc(30 * sizeof(Creature));
-
-    for(int i = 0; i < 30; i++)
-        enemy[i].render.texture = NULL;
-
-    Controls input = {-1, false, false, false, false};
-    WaveControl wavecontrol = {1, 3, 0, 200, false, false};
-
-    //Ellenfelek �s id�z�t�k l�trehoz�sa
-    spawnWave(&enemy, renderer);
+    Enemies enemystruct;
     Timers timers;
-    timers.refreshWaveTimers = false;
-    timers.movetimer = SDL_AddTimer(500, movetime, NULL);
-    timers.movetimernewvalue = 500;
-    timers.projectiletimer = SDL_AddTimer(50, projectiletime, NULL);
-    timers.firetimer = SDL_AddTimer(200, firetime, NULL);
-    timers.firetimermemory = 200;
-    timers.enemyfiretimer = SDL_AddTimer(100, enemyfiretime, NULL);
-    timers.enemyfiretimernewvalue = 100;
-    timers.respawntimer = SDL_AddTimer(0, respawntime, NULL);
-    timers.respawntimermemory = 0;
+    Controls input = {-1, false, false, false, false};
+    WaveControl wavecontrol = {0, 3, 0, 200, false, false};
+
+    //Változók értékadása
+    initiatevariables(&projectileArray, &player, &enemystruct, &timers, renderer);
 
     while (!input.quit)
     {
-        checkWave(&timers, &enemymoves, &wavecontrol, &enemy, &projectileArray, renderer);
+        checkWave(&timers, &enemystruct, &wavecontrol, &projectileArray, renderer);
 
-        checkEvents(&wavecontrol, &input, &enemymoves, &enemy, &projectileArray, &player);
+        checkEvents(&wavecontrol, &input, &enemystruct, &projectileArray, &player);
 
         movePlayer(input, &player);
 
         fire(&wavecontrol, &input, player, &projectileArray, renderer);
 
-        enemyfire(&wavecontrol, &enemy, &projectileArray, renderer);
+        enemyfire(&wavecontrol, &enemystruct, &projectileArray, renderer);
 
         refreshTimers(&timers, &wavecontrol);
 
-        respawn(&wavecontrol, &player, &timers, renderer);
+        respawn(&input, &wavecontrol, &player, &timers, renderer);
 
-        //prepareScene(player, enemy, projectileArray, renderer);
-
-        refreshScene(player, enemy, projectileArray, renderer);
+        refreshScene(player, enemystruct, projectileArray, renderer);
 
         drawhud(wavecontrol, font, renderer);
 
@@ -77,17 +76,15 @@ void game(State *state){
 
     }
 
-    /* sz�ks�ges elemek t�rl�se */
+    /* szükséges elemek törlése */
     SDL_RemoveTimer(timers.movetimer);
     SDL_RemoveTimer(timers.projectiletimer);
     SDL_RemoveTimer(timers.firetimer);
     SDL_RemoveTimer(timers.enemyfiretimer);
     SDL_RemoveTimer(timers.respawntimer);
     free(projectileArray.data);
-    free(enemy);
+    sdl_close(&window, &renderer, &font);
     SDL_Quit();
-    enterName(wavecontrol, font);
-
+    enterName(wavecontrol);
     *state = inmenu;
-    TTF_CloseFont(font);
 }

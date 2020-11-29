@@ -39,19 +39,25 @@ typedef struct renderValues
     SDL_Texture *texture;
 } renderValues;
 
-typedef struct Buttons
-{
-    renderValues button1;
-    renderValues button2;
-    renderValues button3;
-} Buttons;
-
 typedef struct Creature
 {
     renderValues render;
     ProjectileType emitter;
     bool alive;
 } Creature;
+
+typedef struct MoveNumbers
+{
+    int moveline;
+    int movexcount;
+    int movexdirection;
+} MoveNumbers;
+
+typedef struct Enemies
+{
+    Creature enemy[30];
+    MoveNumbers movenumbers;
+} Enemies;
 
 typedef struct Projectile
 {
@@ -65,12 +71,6 @@ typedef struct ProjectileArray
     Projectile *data;
     int scale;
 } ProjectileArray;
-
-typedef struct MoveNumbers
-{
-    int movexcount;
-    int movexdirection;
-} MoveNumbers;
 
 typedef struct WaveControl
 {

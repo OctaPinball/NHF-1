@@ -52,16 +52,16 @@ void drawhud(WaveControl wavecontrol, TTF_Font *fonts, SDL_Renderer *renderer){
     SDL_RenderPresent(renderer);
 }
 
-void refreshScene(Creature player, Creature *enemy, ProjectileArray projectileArray, SDL_Renderer *renderer)
+void refreshScene(Creature player, Enemies enemy, ProjectileArray projectileArray, SDL_Renderer *renderer)
 {
     SDL_RenderClear(renderer);
     //if (player.alive == true)
         draw(player.render, renderer);
     for (int i = 0; i < 30; i++)
     {
-        if (enemy[i].alive == true)
+        if (enemy.enemy[i].alive == true)
         {
-            draw(enemy[i].render, renderer);
+            draw(enemy.enemy[i].render, renderer);
         }
     }
     for (int i = 0; i < projectileArray.scale; i++)
@@ -71,26 +71,9 @@ void refreshScene(Creature player, Creature *enemy, ProjectileArray projectileAr
     //SDL_RenderPresent(renderer);
 }
 
-void prepareScene(Creature player, Creature *enemy, ProjectileArray projectileArray, SDL_Renderer *renderer){
-{
-    SDL_DestroyTexture(player.render.texture);
-    for (int i = 0; i < 30; i++)
-    {
-        if (enemy[i].alive == true)
-        {
-            draw(enemy[i].render, renderer);
-        }
-    }
-    for (int i = 0; i < projectileArray.scale; i++)
-    {
-        draw(projectileArray.data[i].render, renderer);
-    }
-    SDL_RenderClear(renderer);
-}
-}
 
-/* ablak letrehozasa */
-void sdl_init(char const *felirat, int szeles, int magas, SDL_Window **pwindow, SDL_Renderer **prenderer)
+
+void sdl_init(char const *felirat, int szeles, int magas, SDL_Window **pwindow, SDL_Renderer **prenderer, TTF_Font **pfont)
 {
     if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
     {
@@ -109,10 +92,30 @@ void sdl_init(char const *felirat, int szeles, int magas, SDL_Window **pwindow, 
         SDL_Log("Nem hozhato letre a megjelenito: %s", SDL_GetError());
         exit(1);
     }
+    TTF_Init();
+    TTF_Font *font = TTF_OpenFont("resources/pixel.ttf", 64);
+    if (font == NULL) {
+        SDL_Log("Nem sikerult megnyitni a fontot! %s\n", TTF_GetError());
+        exit(1);
+    }
     SDL_RenderClear(renderer);
 
+    *pfont = font;
     *pwindow = window;
     *prenderer = renderer;
+}
+
+void sdl_close(SDL_Window **pwindow, SDL_Renderer **prenderer, TTF_Font **pfont) {
+    SDL_DestroyRenderer(*prenderer);
+    *prenderer = NULL;
+
+    SDL_DestroyWindow(*pwindow);
+    *pwindow = NULL;
+
+    TTF_CloseFont(*pfont);
+    *pfont = NULL;
+
+    SDL_Quit();
 }
 
 SDL_Texture *loadTexture(char *filename, SDL_Renderer *renderer)

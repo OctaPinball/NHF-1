@@ -1,6 +1,6 @@
 #include "common.h"
 
-void resetWave(Timers *timers, MoveNumbers *movenumbers, WaveControl *wavecontrol, Creature **enemy, ProjectileArray *projectileArray, SDL_Renderer *renderer)
+void resetWave(Timers *timers, Enemies *enemy, WaveControl *wavecontrol, ProjectileArray *projectileArray, SDL_Renderer *renderer)
 {
     wavecontrol->wave++;
     for(int i = 0; i < projectileArray->scale; i++)
@@ -9,18 +9,17 @@ void resetWave(Timers *timers, MoveNumbers *movenumbers, WaveControl *wavecontro
     projectileArray->data = (Projectile*) malloc(0 * sizeof(Projectile));
     projectileArray->scale = 0;
     spawnWave(enemy, renderer);
-    movenumbers->movexdirection = 1;
-    movenumbers->movexcount = 0;
+    enemy->movenumbers.movexdirection = 1;
+    enemy->movenumbers.movexcount = 0;
+    enemy->movenumbers.moveline = 0;
     timers->enemyfiretimernewvalue *= 0.9;
     timers->movetimernewvalue *= 0.9;
     timers->refreshWaveTimers = true;
 }
 
-void checkWave(Timers *timers, MoveNumbers *movenumbers, WaveControl *wavecontrol, Creature **enemy, ProjectileArray *projectileArray, SDL_Renderer *renderer)
+void checkWave(Timers *timers, Enemies *enemy, WaveControl *wavecontrol, ProjectileArray *projectileArray, SDL_Renderer *renderer)
 {
-    for(int i = 0; i < 30; i++)
-        if((*enemy)[i].alive == true)
-        return;
-    resetWave(timers, movenumbers, wavecontrol, enemy, projectileArray, renderer);
+    if (!enemyalive(enemy, 0 , 30))
+        resetWave(timers, enemy, wavecontrol, projectileArray, renderer);
 }
 

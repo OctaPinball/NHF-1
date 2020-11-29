@@ -1,6 +1,6 @@
 #include "common.h"
 
-void checkEvents(WaveControl *wavecontrol, Controls *input, MoveNumbers *enemymoves, Creature **enemy, ProjectileArray *projectileArray, Creature *player){
+void checkEvents(WaveControl *wavecontrol, Controls *input, Enemies *enemy, ProjectileArray *projectileArray, Creature *player){
     SDL_Event event;
     while (SDL_PollEvent(&event))
     {
@@ -52,7 +52,7 @@ void checkEvents(WaveControl *wavecontrol, Controls *input, MoveNumbers *enemymo
             break;
         case (SDL_USEREVENT+1):
             //printf("tikk");
-            moveEnemy(&(*enemymoves), &(*&(*enemy)));
+            moveEnemy(&(*input), &(*enemy));
             break;
         case (SDL_USEREVENT+2):
             wavecontrol->fireready = true;

@@ -16,33 +16,27 @@ void menu(State *state)
 {
     SDL_Window *window;
     SDL_Renderer *renderer;
-    sdl_init("SPACE INVADERS", 1280, 720, &window, &renderer);
-    Buttons buttons;
-    buttons.button1.x = 350;
-    buttons.button1.y = 328;
-    buttons.button1.texture = loadTexture("resources/button_inactive.png", renderer);
-    buttons.button2.x = 350;
-    buttons.button2.y = 448;
-    buttons.button2.texture = loadTexture("resources/button_inactive.png", renderer);
-    buttons.button3.x = 350;
-    buttons.button3.y = 568;
-    buttons.button3.texture = loadTexture("resources/button_inactive.png", renderer);
-    renderValues background;
-    background.x = 0;
-    background.y = 0;
-    background.texture = loadTexture("resources/menu_background.png", renderer);
+    TTF_Font *font;
+    sdl_init("SPACE INVADERS", 1280, 720, &window, &renderer, &font);
+    renderValues buttons[3];
+    for (int i = 0; i < 3; i++)
+    {
+        buttons[i].x = 350;
+        buttons[i].y = 328 + i * 120;
+        buttons[i].texture = loadTexture("resources/button_inactive.png", renderer);
+    }
+    renderValues background = {0, 0, loadTexture("resources/menu_background.png", renderer)};
     bool exitmenu = false;
     while(!exitmenu)
     {
         SDL_RenderClear(renderer);
         SDL_Event event;
         SDL_WaitEvent(&event);
-        SDL_DestroyTexture(buttons.button1.texture);
-        SDL_DestroyTexture(buttons.button2.texture);
-        SDL_DestroyTexture(buttons.button3.texture);
-        buttons.button1.texture = loadTexture("resources/button_inactive.png", renderer);
-        buttons.button2.texture = loadTexture("resources/button_inactive.png", renderer);
-        buttons.button3.texture = loadTexture("resources/button_inactive.png", renderer);
+        for (int i = 0; i < 3; i++)
+        {
+            SDL_DestroyTexture(buttons[i].texture);
+            buttons[i].texture = loadTexture("resources/button_inactive.png", renderer);
+        }
         switch (event.type)
         {
         case SDL_MOUSEBUTTONDOWN:
@@ -64,40 +58,40 @@ void menu(State *state)
                     break;
                 }
             }
-                break;
-            case SDL_MOUSEMOTION:
-                switch (buttonDetect(event))
-                {
+            break;
+        case SDL_MOUSEMOTION:
+            switch (buttonDetect(event))
+            {
 
-                case b_new_game:
-                    SDL_DestroyTexture(buttons.button1.texture);
-                    buttons.button1.texture = loadTexture("resources/button_active.png", renderer);
-                    break;
-                case b_leaderboard:
-                    SDL_DestroyTexture(buttons.button2.texture);
-                    buttons.button2.texture = loadTexture("resources/button_active.png", renderer);
-                    break;
-                case b_exit:
-                    SDL_DestroyTexture(buttons.button3.texture);
-                    buttons.button3.texture = loadTexture("resources/button_active.png", renderer);
-                    break;
-                }
+            case b_new_game:
+                SDL_DestroyTexture(buttons[0].texture);
+                buttons[0].texture = loadTexture("resources/button_active.png", renderer);
                 break;
-            case SDL_QUIT:
-                *state = exitprogram;
-                exitmenu = true;
+            case b_leaderboard:
+                SDL_DestroyTexture(buttons[1].texture);
+                buttons[1].texture = loadTexture("resources/button_active.png", renderer);
                 break;
-
+            case b_exit:
+                SDL_DestroyTexture(buttons[2].texture);
+                buttons[2].texture = loadTexture("resources/button_active.png", renderer);
+                break;
             }
+            break;
+        case SDL_QUIT:
+            *state = exitprogram;
+            exitmenu = true;
+            break;
+
+        }
+        // Menü hátterének és gombjainak megrajzolása
         draw(background, renderer);
-        draw(buttons.button1, renderer);
-        draw(buttons.button2, renderer);
-        draw(buttons.button3, renderer);
+        for (int i = 0; i < 3; i++)
+            draw(buttons[i], renderer);
         SDL_RenderPresent(renderer);
     }
+    // Felszabadítás és SDL bezárása
     SDL_DestroyTexture(background.texture);
-    SDL_DestroyTexture(buttons.button1.texture);
-    SDL_DestroyTexture(buttons.button2.texture);
-    SDL_DestroyTexture(buttons.button3.texture);
-    SDL_Quit();
+    for (int i = 0; i < 3; i++)
+        SDL_DestroyTexture(buttons[i].texture);
+    sdl_close(&window, &renderer, &font);
 }

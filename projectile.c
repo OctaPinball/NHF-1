@@ -32,26 +32,8 @@ void autodestroyProjectile(ProjectileArray *projectileArray, int i)
     }
 }
 
-void detectProjectileHit(Creature *player, Creature **enemy, ProjectileArray *projectileArray)
-{
-    for (int i = 0; i < projectileArray->scale; i++)
-    {
-        if (projectileArray->data->type == ship)
-        {
-            for (int j = 0; j < 30; j++)
-            {
-                if (sqrt(pow((double)(projectileArray->data[i].render.x - (*enemy)[j].render.x), (double)(2)) + pow((double)(projectileArray->data[i].render.y - (*enemy)[j].render.y), (double)(2))) < (double)(30) && (*enemy)[j].alive == true)
-                {
-                    deleteProjectile(&(*projectileArray), i--);
-                    (*enemy)[j].alive = false;
-                    break;
-                }
-            }
-        }
-    }
-}
 
-void combinedProjectileDetection(WaveControl *wavecontrol, Creature *player, Creature **enemy, ProjectileArray *projectileArray)
+void combinedProjectileDetection(WaveControl *wavecontrol, Creature *player, Enemies *enemy, ProjectileArray *projectileArray)
 {
     for (int i = 0; i < projectileArray->scale; i++)
         if (projectileArray->data->render.y < -10 || projectileArray->data->render.y > 720)
@@ -64,10 +46,10 @@ void combinedProjectileDetection(WaveControl *wavecontrol, Creature *player, Cre
         {
             for (int j = 0; j < 30; j++)
             {
-                if (sqrt(pow((double)(projectileArray->data[i].render.x - (*enemy)[j].render.x), (double)(2)) + pow((double)(projectileArray->data[i].render.y - (*enemy)[j].render.y), (double)(2))) < (double)(30) && (*enemy)[j].alive == true)
+                if (sqrt(pow((double)(projectileArray->data[i].render.x - enemy->enemy[j].render.x), (double)(2)) + pow((double)(projectileArray->data[i].render.y - enemy->enemy[j].render.y), (double)(2))) < (double)(30) && enemy->enemy[j].alive == true)
                 {
                     deleteProjectile(&(*projectileArray), i--);
-                    (*enemy)[j].alive = false;
+                    enemy->enemy[j].alive = false;
                     wavecontrol->score++;
                     break;
                 }
@@ -187,21 +169,21 @@ bool detectProjectilePath(Creature *enemy, int i)
     return true;
 }
 
-void enemyfire(WaveControl *wavecontrol, Creature **enemy, ProjectileArray *projectileArray, SDL_Renderer *renderer)
+void enemyfire(WaveControl *wavecontrol, Enemies *enemy, ProjectileArray *projectileArray, SDL_Renderer *renderer)
 {
-    if (wavecontrol->enemyfireready == true && enemyalive(enemy))
+    if (wavecontrol->enemyfireready == true && enemyalive(enemy, 0, 30))
     {
         int i;
         while(true)
         {
             i = rand()%30;
-            if ((*enemy)[i].alive == true && detectProjectilePath(*enemy, i) == true)
+            if (enemy->enemy[i].alive == true && detectProjectilePath(enemy->enemy, i) == true)
             {
                 break;
             }
 
         }
-        createProjectile((*enemy)[i], &(*projectileArray), renderer);
+        createProjectile(enemy->enemy[i], &(*projectileArray), renderer);
         wavecontrol->enemyfireready = false;
     }
 }

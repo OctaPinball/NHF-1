@@ -154,10 +154,11 @@ bool input_text(char *dest, size_t hossz, SDL_Rect teglalap, SDL_Color hatter, S
     return enter;
 }
 
-void enterName(WaveControl wavecontrol, TTF_Font *font){
+void enterName(WaveControl wavecontrol){
     SDL_Window *window;
     SDL_Renderer *renderer;
-    sdl_init("SPACE INVADERS", 720, 360, &window, &renderer);
+    TTF_Font *font;
+    sdl_init("SPACE INVADERS", 720, 360, &window, &renderer, &font);
     renderValues text = {42, 80, NULL};
     textdraw(text,"GREAT SCORE!   ENTER YOUR NAME!", font, renderer);
     SDL_Color feher = {255, 255, 255}, fekete = { 0, 0, 0 };
@@ -169,12 +170,11 @@ void enterName(WaveControl wavecontrol, TTF_Font *font){
 }
 
 void showleaderboard(State *state){
-    TTF_Init();
-    TTF_Font *font = TTF_OpenFont("resources/pixel.ttf", 64);
-    TTF_Font *fontbig = TTF_OpenFont("resources/pixel.ttf", 128);
     SDL_Window *window;
     SDL_Renderer *renderer;
-    sdl_init("SPACE INVADERS", 1000, 710, &window, &renderer);
+    TTF_Font *font;
+    sdl_init("SPACE INVADERS", 1000, 710, &window, &renderer, &font);
+    TTF_Font *fontbig = TTF_OpenFont("resources/pixel.ttf", 128);
     *state = inmenu;
     renderValues text = {260, 0, NULL};
     textdraw(text,"LEADERBOARD", fontbig, renderer);
@@ -206,8 +206,7 @@ void showleaderboard(State *state){
         if (event.type == SDL_KEYUP)
             if (event.key.keysym.sym == SDLK_ESCAPE)
             {
-                TTF_CloseFont(font);
-                SDL_Quit();
+                sdl_close(&window, &renderer, &font);
                 break;
             }
 
