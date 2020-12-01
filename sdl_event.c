@@ -46,12 +46,8 @@ void checkEvents(WaveControl *wavecontrol, Controls *input, Enemies *enemy, Proj
         case SDL_USEREVENT:
             refreshProjectile(&(*projectileArray));
             combinedProjectileDetection(&(*wavecontrol), &(*player), &(*&(*enemy)), &(*projectileArray));
-            //detectProjectileHit(&(*player), &(*enemy), &(*projectileArray));
-            //autodestroyProjectile(&(*projectileArray), 0);
-            //printf("tikk");
             break;
         case (SDL_USEREVENT+1):
-            //printf("tikk");
             moveEnemy(&(*input), &(*enemy));
             break;
         case (SDL_USEREVENT+2):

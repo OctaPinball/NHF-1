@@ -4,7 +4,8 @@
 int main(int argc, char *argv[])
 {
     State state = inmenu;
-    while(state != exitprogram)
+    bool exit = false;
+    while(!exit)
     {
         switch (state)
         {
@@ -16,6 +17,9 @@ int main(int argc, char *argv[])
             break;
         case inleaderboard:
             showleaderboard(&state);
+            break;
+        case exitprogram:
+            exit = true;
             break;
         }
     }

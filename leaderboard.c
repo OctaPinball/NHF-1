@@ -1,65 +1,100 @@
 #include "common.h"
 
+void freearray(char **names, int size){
+    for (int i = 0; i < size; i++)
+        free(names[i]);
+    free(names);
+}
+//Átméretezi a names dinamikus tömböt és felveszi a newname-t
 void resizenames(char ***names, int size, char *newname)
 {
     char **newnames = (char**) malloc(size * sizeof(char*));
     for (int i = 0; i < size - 1; i++)
     {
-        int charsize = strlen(*names[i]) + 1;
+        int charsize = strlen((*names)[i]) + 1;
         newnames[i] = (char*) malloc(charsize * sizeof(char));
-        strcpy(newnames[i], *names[i]);
+        strcpy(newnames[i], (*names)[i]);
     }
     int charsize = strlen(newname) + 1;
     newnames[size - 1] = (char*) malloc(charsize * sizeof(char));
     strcpy(newnames[size - 1], newname);
+    freearray(*names, size - 1);
+    *names = newnames;
+}
+//Átméretezi a scores dinamikus tömböt és felveszi a scoretempet-t
+void resizescore(int **scores, int size, int scoretemp)
+{
+    int *newscores = (int*) malloc(size * sizeof(int));
+    for (int i = 0; i < size - 1; i++)
+        newscores[i] = (*scores)[i];
+    newscores[size - 1] = scoretemp;
+    free(*scores);
+    *scores = newscores;
+}
+//Megcseréli a neveket
+void bubble_switch(int *score1, int *score2, char **name1, char **name2)
+{
+
+    int scoretemp = *score1;
+    score1 = score2;
+    *score2 = scoretemp;
+
+    char *nametemp = *name1;
+    *name1 = *name2;
+    *name2 = nametemp;
+}
+//Buborékrendezés alapján rendezi a names és a scores dinamikus tömböket
+void bubblesort(char **names, int size, int *scores)
+{
+    for(int i=0; i<size; i++)
+    {
+        for(int j=0; j<size - i - 1; j++)
+        {
+            if(scores[j] < scores[j+1])
+            {
+                bubble_switch(&scores[j], &scores[j+1], &names[j], &names[j+1]);
+            }
+        }
+    }
 }
 
-void sortScoreboard(Player newplayer)
+
+void sortScoreboard(char *newname, int newscore)
 {
-    //Player player[11];
-    //player[0] = newplayer;
-    //Player temp;
-    char **names = NULL; //szavak száma , karakterek száma
+    int *scores = (int*)malloc(0 * sizeof(int));
+    char **names = (char**)malloc(0 * sizeof(char*)); //szavak száma , karakterek száma
     char nametemp[30]; //LEHETNE POINTER!!
     int scoretemp;
     int size = 0;
     FILE *leaderboardFile = fopen("leaderboard.txt", "r");
 
-    /*READ SCORES FROM TEXTFILE*/
-    for(int i = 1; i < 10 && fscanf(leaderboardFile, "%s %d%*c", &nametemp, &scoretemp) != EOF; i++)
+    //Beolvasás fiájlból
+    for(int i = 0; i < 10 && fscanf(leaderboardFile, "%s %d%*c", nametemp, &scoretemp) != EOF; i++)
     {
         size++;
         resizenames(&names, size, nametemp);
-        //fscanf(leaderboardFile, "%s %d%*c", player[i].name, &player[i].score);
-        printf("name: %s, points: %d\n", player[i].name, player[i].score);
+        resizescore(&scores, size, scoretemp);
     }
-    printf("\n\n\nhow many: %d\n\n\n",size);
 
-    /*SORT WITH BUBBLESORT*/
-    for(int i=0; i<size+1; i++)
-    {
-        for(int j=0; j<size; j++)
-        {
-            if(player[j].score < player[j+1].score)
-            {
-                temp = player[j];
-                player[j] = player[j+1];
-                player[j+1] = temp;
-            }
-        }
-    }
+        size++;
+        resizenames(&names, size, newname);
+        resizescore(&scores, size, newscore);
+
+
+    //Buborékrendezéssel rendezés
+    bubblesort(names, size, scores);
+
 
     fclose(leaderboardFile);
     FILE *leaderboardFile2 = fopen("leaderboard.txt", "w");
-    //void rewind ( FILE * leaderboardFile2 );
 
-    /*WRITE SORTED SCORES TO TEXTFILE*/
-    for(int i=0; i<size+1; i++)
+    //Fájlbaírás
+    for(int i=0; i<size; i++)
     {
-        printf("%s %d\n", player[i].name, player[i].score);
-        fprintf(leaderboardFile2, "%s %d\n", player[i].name, player[i].score);
+        fprintf(leaderboardFile2, "%s %d\n", names[i], scores[i]);
     }
-
+    freearray(names, size);
+    free(scores);
     fclose(leaderboardFile2);
 }
 
@@ -198,10 +233,11 @@ void enterName(WaveControl wavecontrol)
     textdraw(text,"GREAT SCORE!   ENTER YOUR NAME!", font, renderer);
     SDL_Color feher = {255, 255, 255}, fekete = { 0, 0, 0 };
     SDL_Rect r = { 60, 180, 600, 70 };
-    Player endplayer;
-    endplayer.score = wavecontrol.score;
-    input_text(endplayer.name, 30, r, fekete, feher, font, renderer);
-    sortScoreboard(endplayer);
+    char playername[30];
+    int playerscore = wavecontrol.score;
+    input_text(playername, 30, r, fekete, feher, font, renderer);
+
+    sortScoreboard(playername, playerscore);
 }
 
 void showleaderboard(State *state)
@@ -214,19 +250,18 @@ void showleaderboard(State *state)
     *state = inmenu;
     renderValues text = {260, 0, NULL};
     textdraw(text,"LEADERBOARD", fontbig, renderer);
-    Player player[10];
+    char playername[10][30];
+    int playerscore[10];
     renderValues r_name = {20, 100, NULL};
     renderValues r_score = {850, 100, NULL};
     FILE *leaderboardFile = fopen("leaderboard.txt", "r");
-    for(int i = 0; i < 10 && fscanf(leaderboardFile, "%s %d%*c", player[i].name, &player[i].score) != EOF; i++)
+    for(int i = 0; i < 10 && fscanf(leaderboardFile, "%s %d%*c", playername[i], &playerscore[i]) != EOF; i++)
     {
-        //fscanf(leaderboardFile, "%s %d%*c", player[i].name, &player[i].score);
-        printf("name: %s, points: %d\n", player[i].name, player[i].score);
         char name[30];
         char score[7];
-        sprintf(name, "%s", player[i].name);
+        sprintf(name, "%s", playername[i]);
         textdraw(r_name, name, font, renderer);
-        sprintf(score, "%5d", player[i].score);
+        sprintf(score, "%5d", playerscore[i]);
         textdraw(r_score, score, font, renderer);
         r_name.y += 60;
         r_score.y += 60;
@@ -239,12 +274,16 @@ void showleaderboard(State *state)
         SDL_RenderClear(renderer);
         SDL_Event event;
         SDL_WaitEvent(&event);
+        if (event.type == SDL_QUIT)
+        {
+                sdl_close(&window, &renderer, &font);
+                break;
+        }
         if (event.type == SDL_KEYUP)
             if (event.key.keysym.sym == SDLK_ESCAPE)
             {
                 sdl_close(&window, &renderer, &font);
                 break;
             }
-
     }
 }

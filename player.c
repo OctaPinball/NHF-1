@@ -1,7 +1,7 @@
 #include "common.h"
 
 
-
+//Játékos mozgatása
 void movePlayer(Controls input, Creature *player){
         if (input.left && player->render.x > 0)
         {
@@ -13,7 +13,7 @@ void movePlayer(Controls input, Creature *player){
         }
 }
 
-
+//Játékos újraélesztése
 void respawn(Controls *input, WaveControl *wavecontrol, Creature *player, Timers *timers, SDL_Renderer *renderer){
     if (player->alive == false && timers->respawntimermemory == 0)
     {

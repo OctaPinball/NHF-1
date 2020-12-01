@@ -1,7 +1,7 @@
 #include "common.h"
 
 
-
+//Ellenfelek alapállapotba helyezése
 void spawnWave(Enemies *enemy, SDL_Renderer *renderer)
 {
     for (int i = 0; i < 3; i++)
@@ -37,7 +37,7 @@ void spawnWave(Enemies *enemy, SDL_Renderer *renderer)
         }
     }
 }
-
+//Ellenfelek ellenõrzése, hogy életben vannak-e
 bool enemyalive(Enemies *enemy, int i, int j)
 {
     for (int k = i; k < j; k++)
@@ -45,7 +45,7 @@ bool enemyalive(Enemies *enemy, int i, int j)
             return true;
     return false;
 }
-
+//Ellenfelek eggyel mozgatása
 void moveEnemy(Controls *input, Enemies *enemy)
 {
     if (enemy->movenumbers.movexcount == 20)

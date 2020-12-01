@@ -1,5 +1,6 @@
 #include "common.h"
 
+//Tárgy megrajzolása
 void draw(renderValues render, SDL_Renderer *renderer)
 {
     SDL_Rect dest;
@@ -11,6 +12,7 @@ void draw(renderValues render, SDL_Renderer *renderer)
     SDL_RenderCopy(renderer, render.texture, NULL, &dest);
 }
 
+//Szöveg texture-é alakítása
 void textdraw(renderValues source ,char *text, TTF_Font *fonts, SDL_Renderer *renderer){
     SDL_Surface *felirat;
 
@@ -22,22 +24,10 @@ void textdraw(renderValues source ,char *text, TTF_Font *fonts, SDL_Renderer *re
     draw(source, renderer);
     SDL_FreeSurface(felirat);
     SDL_DestroyTexture(source.texture);
-    /*
-    hova.x = (480 - felirat->w) / 2;
-    hova.y = 60;
-    hova.w = felirat->w;
-    hova.h = felirat->h;
-    SDL_RenderCopy(renderer, felirat_t, NULL, &hova);
-    SDL_FreeSurface(felirat);
-    SDL_DestroyTexture(felirat_t);
-    */
 }
 
+//Kijelezni kívánt adatok elrendezése
 void drawhud(WaveControl wavecontrol, TTF_Font *fonts, SDL_Renderer *renderer){
-    //boxRGBA(renderer, 0, 720, 1280, 784, 100, 0, 0, 0);
-    //thickLineRGBA(renderer, 0, 720, 1280, 720, 5, 255, 255, 255, 0);
-    //clearhud()
-
     renderValues score = {10, 720, NULL};
     renderValues life = {1000, 720, NULL};
     renderValues wave = {600, 720, NULL};
@@ -52,6 +42,7 @@ void drawhud(WaveControl wavecontrol, TTF_Font *fonts, SDL_Renderer *renderer){
     SDL_RenderPresent(renderer);
 }
 
+//Minden elem megrajzolása
 void refreshScene(Creature player, Enemies enemy, ProjectileArray projectileArray, SDL_Renderer *renderer)
 {
     SDL_RenderClear(renderer);
@@ -68,7 +59,6 @@ void refreshScene(Creature player, Enemies enemy, ProjectileArray projectileArra
     {
         draw(projectileArray.data[i].render, renderer);
     }
-    //SDL_RenderPresent(renderer);
 }
 
 
@@ -122,7 +112,7 @@ SDL_Texture *loadTexture(char *filename, SDL_Renderer *renderer)
 {
     SDL_Texture *texture;
 
-    //SDL_LogMessage(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_INFO, "Loading %s", filename);
+    SDL_LogMessage(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_INFO, "Loading %s", filename);
 
     texture = IMG_LoadTexture(renderer, filename);
 

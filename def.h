@@ -7,7 +7,6 @@ typedef enum State
     ingame,
     inmenu,
     inleaderboard,
-    gamend,
     exitprogram,
 } State;
 
@@ -25,12 +24,6 @@ typedef enum ProjectileType
     medium,
     fast
 } ProjectileType;
-
-typedef struct Player
-{
-    char name[30];
-    int score;
-} Player;
 
 typedef struct renderValues
 {
@@ -96,11 +89,6 @@ typedef struct Timers
     int respawntimermemory;
     int respawntimernewvalue;
 } Timers;
-
-typedef struct Fonts
-{
-    TTF_Font *hudfont;
-} Fonts;
 
 typedef struct Controls
 {

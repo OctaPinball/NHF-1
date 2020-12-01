@@ -359,7 +359,7 @@
 	"begin_code.h"
 	"close_code.h"
 
-1606646885 c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\struct.h
+1606669285 c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\struct.h
 	"common.h"
 
 1606165009 c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\timer.h
@@ -369,16 +369,16 @@
 
 1606645820 c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\enemy.h
 
-1606646593 source:c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\projectile.c
+1606690295 source:c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\projectile.c
 	"common.h"
 
-1606648406 source:c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\render.c
+1606690231 source:c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\render.c
 	"common.h"
 
-1606650013 source:c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\enemy.c
+1606690346 source:c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\enemy.c
 	"common.h"
 
-1606646417 c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\projectile.h
+1606681848 c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\projectile.h
 
 1606648299 c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\render.h
 
@@ -402,7 +402,7 @@
 
 1605632728 c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\input.h
 
-1606639799 source:c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\player.c
+1606690157 source:c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\player.c
 	"common.h"
 
 1606639762 c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\player.h
@@ -417,12 +417,12 @@
 	"begin_code.h"
 	"close_code.h"
 
-1606650080 source:c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\wave.c
+1606690357 source:c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\wave.c
 	"common.h"
 
 1606646252 c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\wave.h
 
-1606652101 c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\common.h
+1606687715 c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\common.h
 	<SDL2/SDL.h>
 	<SDL2/SDL2_gfxPrimitives.h>
 	<SDL2/SDL_image.h>
@@ -433,7 +433,7 @@
 	<time.h>
 	<stdlib.h>
 	<string.h>
-	"struct.h"
+	"def.h"
 	"timer.h"
 	"enemy.h"
 	"projectile.h"
@@ -459,11 +459,14 @@
 
 1606573056 c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\menu.h
 
-1606648383 source:c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\menu.c
+1606690399 source:c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\menu.c
 	"common.h"
 
-1606648152 c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\leaderboard.h
+1606686916 c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\leaderboard.h
 
-1606648400 source:c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\leaderboard.c
+1606690076 source:c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\leaderboard.c
+	"common.h"
+
+1606690398 c:\users\schol\onedrive - kormányzati informatikai fejlesztési Ügynökség\documents\programozas\nhz\def.h
 	"common.h"
 

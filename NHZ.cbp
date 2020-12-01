@@ -48,6 +48,7 @@
 		</Linker>
 		<Unit filename="common.h" />
 		<Unit filename="debugmalloc.h" />
+		<Unit filename="def.h" />
 		<Unit filename="enemy.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -83,7 +84,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="sdl_event.h" />
-		<Unit filename="struct.h" />
 		<Unit filename="timer.c">
 			<Option compilerVar="CC" />
 		</Unit>

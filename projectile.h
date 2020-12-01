@@ -2,7 +2,6 @@
 #define PROJECTILE_H_INCLUDED
 
 void deleteProjectile(ProjectileArray *projectileArray, int idx);
-void autodestroyProjectile(ProjectileArray *projectileArray, int i);
 void combinedProjectileDetection(WaveControl *wavecontrol, Creature *player, Enemies *enemy, ProjectileArray *projectileArray);
 void createProjectile(Creature creature, ProjectileArray *projectileArray, SDL_Renderer *renderer);
 void fire(WaveControl *wavecontrol, Controls *input, Creature player, ProjectileArray *projectileArray, SDL_Renderer *renderer);

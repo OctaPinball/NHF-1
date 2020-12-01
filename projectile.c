@@ -1,5 +1,6 @@
 #include "common.h"
 
+//Lövedék törlése, tömb csökkentése
 void deleteProjectile(ProjectileArray *projectileArray, int idx)
 {
     SDL_DestroyTexture(projectileArray->data[idx].render.texture);
@@ -17,22 +18,7 @@ void deleteProjectile(ProjectileArray *projectileArray, int idx)
     projectileArray->data = ujtomb;
     projectileArray->scale-=1;
 }
-
-void autodestroyProjectile(ProjectileArray *projectileArray, int i)
-{
-    while (i < projectileArray->scale)
-    {
-        if (projectileArray->data->render.y < -10 || projectileArray->data->render.y > 720)
-        {
-            deleteProjectile(projectileArray, i);
-            autodestroyProjectile(projectileArray, i);
-            break;
-        }
-        i++;
-    }
-}
-
-
+//Lövedék találat ellenõrzése
 void combinedProjectileDetection(WaveControl *wavecontrol, Creature *player, Enemies *enemy, ProjectileArray *projectileArray)
 {
     for (int i = 0; i < projectileArray->scale; i++)
@@ -82,7 +68,7 @@ void combinedProjectileDetection(WaveControl *wavecontrol, Creature *player, Ene
 }
 
 }
-
+//Lövedék létrehozása Creature függvényében
 void createProjectile(Creature creature, ProjectileArray *projectileArray, SDL_Renderer *renderer)
 {
     Projectile *ujtomb = (Projectile*)malloc((projectileArray->scale + 1) * sizeof(Projectile));
@@ -123,7 +109,6 @@ void createProjectile(Creature creature, ProjectileArray *projectileArray, SDL_R
         projectileArray->data[projectileArray->scale - 1].speed = 16;
         break;
     }
-    //printf("%4d  Letrehozas\n", projectileArray->scale);
 }
 
 void fire(WaveControl *wavecontrol, Controls *input, Creature player, ProjectileArray *projectileArray, SDL_Renderer *renderer)

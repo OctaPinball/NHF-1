@@ -1,5 +1,6 @@
 #include "common.h"
 
+//Wave alapállapotbahelyezés, változók reset
 void resetWave(Timers *timers, Enemies *enemy, WaveControl *wavecontrol, ProjectileArray *projectileArray, SDL_Renderer *renderer)
 {
     wavecontrol->wave++;
@@ -17,6 +18,7 @@ void resetWave(Timers *timers, Enemies *enemy, WaveControl *wavecontrol, Project
     timers->refreshWaveTimers = true;
 }
 
+//Újra kell-e indítani wave-et?
 void checkWave(Timers *timers, Enemies *enemy, WaveControl *wavecontrol, ProjectileArray *projectileArray, SDL_Renderer *renderer)
 {
     if (!enemyalive(enemy, 0 , 30))

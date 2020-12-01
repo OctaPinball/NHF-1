@@ -1,6 +1,10 @@
-0 6681856
-0 6619222
-19 21
- 0
-0 0
-b 0
+balint 89
+ahaj 87
+ez 30
+jej 0
+jej 0
+jej 0
+jej 0
+jej 0
+jej 0
+jej 0
