@@ -1,7 +1,8 @@
 #include "common.h"
 
-//L�ved�k t�rl�se, t�mb cs�kkent�se
-void deleteProjectile(ProjectileArray *projectileArray, int idx)
+//Lövedék törlése, tömb csökkentése
+/*
+void deleteProjectileOLD(ProjectileArray *projectileArray, int idx)
 {
     SDL_DestroyTexture(projectileArray->data[idx].render.texture);
     Projectile *ujtomb = (Projectile*)malloc(((projectileArray->scale) - 1) * sizeof(Projectile));
@@ -18,8 +19,40 @@ void deleteProjectile(ProjectileArray *projectileArray, int idx)
     projectileArray->data = ujtomb;
     projectileArray->scale-=1;
 }
-//L�ved�k tal�lat ellen�rz�se
-void combinedProjectileDetection(WaveControl *wavecontrol, Creature *player, Enemies *enemy, ProjectileArray *projectileArray)
+*/
+void freeProjectile(ProjectileList *first)
+{
+    ProjectileList *seeker = first;
+    while (seeker != NULL)
+    {
+        ProjectileList *next_ptr = seeker->next;
+        free(seeker);
+        seeker = next_ptr;
+    }
+}
+
+void deleteProjectile(ProjectileList *first, ProjectileList *backseeker, ProjectileList *seeker)
+{
+    if (seeker == NULL)             /* nincs ilyen elem */
+    {
+        /* nincs teendő */
+    }
+    else if (backseeker == NULL)     /* az első elemet kell törölni */
+    {
+        ProjectileList *ujeleje = seeker->next;
+        free(seeker);
+        first = ujeleje;
+    }
+    else                           /* a közepéről/végéről törlünk */
+    {
+        backseeker->next = seeker->next;
+        free(seeker);
+    }
+}
+
+//Lövedék találat ellenõrzése
+/*
+void combinedProjectileDetectionOLD(WaveControl *wavecontrol, Creature *player, Enemies *enemy, ProjectileArray *projectileArray)
 {
     for (int i = 0; i < projectileArray->scale; i++)
         if (projectileArray->data->render.y < -10 || projectileArray->data->render.y > 720)
@@ -62,14 +95,81 @@ void combinedProjectileDetection(WaveControl *wavecontrol, Creature *player, Ene
                 }
     for (int i = 0; i < projectileArray->scale; i++)
         if(sqrt(pow((double)(projectileArray->data[i].render.x - player->render.x), (double)(2)) + pow((double)(projectileArray->data[i].render.y - player->render.y), (double)(2))) < (double)(16) && player->alive == true && projectileArray->data[i].type != ship)
-{
+        {
             player->alive = false;
             deleteProjectile(&(*projectileArray), i--);
-}
+        }
 
 }
-//L�ved�k l�trehoz�sa Creature f�ggv�ny�ben
-void createProjectile(Creature creature, ProjectileArray *projectileArray, SDL_Renderer *renderer)
+*/
+
+void autodestroyProjectile(ProjectileList *first)
+{
+    ProjectileList *seeker;
+    ProjectileList *backseeker = NULL;
+    for (seeker = first; seeker != NULL; seeker = seeker->next)
+    {
+        if (seeker->data.render.y < -10 || seeker->data.render.y > 720)
+            deleteProjectile(first, backseeker, seeker);
+        backseeker = seeker;
+    }
+}
+
+void enemyhitDetection(ProjectileList *first, Enemies *enemy, WaveControl *wavecontrol)
+{
+    ProjectileList *seeker;
+    ProjectileList *backseeker = NULL;
+    for (seeker = first; seeker != NULL; seeker = seeker->next)
+    {
+        if (seeker->data.type == ship)
+            for (int j = 0; j < 30; j++)
+                if (sqrt(pow((double)(seeker->data.render.x - enemy->enemy[j].render.x), (double)(2)) + pow((double)(seeker->data.render.y - enemy->enemy[j].render.y), (double)(2))) < (double)(30) && enemy->enemy[j].alive == true)
+                {
+                    deleteProjectile(first, backseeker, seeker);
+                    enemy->enemy[j].alive = false;
+                    wavecontrol->score++;
+                    break;
+                }
+        backseeker = seeker;
+    }
+}
+
+void projectilecollisionDetection(ProjectileList *first)
+{
+    ProjectileList *seeker;
+    ProjectileList *backseeker = NULL;
+    for (seeker = first; seeker != NULL; seeker = seeker->next)
+    {
+        if (seeker->data.type == ship)
+        {
+            ProjectileList *seeker_2;
+            ProjectileList *backseeker_2 = NULL;
+            for (seeker_2 = first; seeker_2 != NULL; seeker_2 = seeker_2->next)
+            {
+                if(sqrt(pow((double)(seeker->data.render.x - seeker_2->data.render.x), (double)(2)) + pow((double)(seeker->data.render.y - seeker_2->data.render.y), (double)(2))) < (double)(30) && seeker_2->data.type != ship)
+                {
+                    deleteProjectile(first, backseeker, seeker);
+                    deleteProjectile(first, backseeker_2, seeker_2);
+                }
+                backseeker = seeker;
+            }
+        }
+        backseeker = seeker;
+    }
+}
+
+void combinedProjectileDetection(ProjectileList *first, Enemies *enemy, WaveControl *wavecontrol)
+{
+    autodestroyProjectile(first);
+
+    enemyhitDetection(first, enemy, &(*wavecontrol));
+
+    projectilecollisionDetection(first);
+}
+
+//Lövedék létrehozása Creature függvényében
+/*
+void createProjectileOLD(Creature creature, ProjectileArray *projectileArray, SDL_Renderer *renderer)
 {
     Projectile *ujtomb = (Projectile*)malloc((projectileArray->scale + 1) * sizeof(Projectile));
     for (int i = 0; i < projectileArray->scale; i++)
@@ -110,8 +210,60 @@ void createProjectile(Creature creature, ProjectileArray *projectileArray, SDL_R
         break;
     }
 }
+*/
 
-void fire(WaveControl *wavecontrol, Controls *input, Creature player, ProjectileArray *projectileArray, SDL_Renderer *renderer)
+void createProjectile(Creature creature, ProjectileList *first, SDL_Renderer *renderer)
+{
+    ProjectileList *newprojectile = (ProjectileList*) malloc(sizeof(ProjectileList));
+    newprojectile->next = NULL;
+    newprojectile->data.type = creature.emitter;
+    newprojectile->data.render.x = creature.render.x;
+    newprojectile->data.render.y = creature.render.y;
+    switch(newprojectile->data.type)
+    {
+    case ship:
+
+        newprojectile->data.render.texture = loadTexture("resources/projectileship.png", renderer);
+        newprojectile->data.speed = -16;
+        break;
+
+    case slow:
+
+        newprojectile->data.render.texture = loadTexture("resources/projectile1.png", renderer);
+        newprojectile->data.speed = 8;
+        break;
+
+    case medium:
+
+        newprojectile->data.render.texture = loadTexture("resources/projectile2.png", renderer);
+        newprojectile->data.speed = 12;
+        break;
+
+    case fast:
+
+        newprojectile->data.render.texture = loadTexture("resources/projectile3.png", renderer);
+        newprojectile->data.speed = 16;
+        break;
+    }
+
+    if (first == NULL)
+    {
+        /* üres listánál ez lesz az első elem */
+        first = newprojectile;
+        printf("%d %d\n", newprojectile->data.render.x, newprojectile->data.render.y);
+    }
+    else
+    {
+        /* ha nem üres a lista, az utolsó után fűzzük */
+        ProjectileList *seeker = first;
+        while (seeker->next != NULL)
+            seeker = seeker->next;
+        seeker->next = newprojectile;
+        //printf("\njej");
+    }
+}
+
+void fire(WaveControl *wavecontrol, Controls *input, Creature player, ProjectileList *projectilelist, SDL_Renderer *renderer)
 {
 
     if (input->autofire == 1)
@@ -120,7 +272,7 @@ void fire(WaveControl *wavecontrol, Controls *input, Creature player, Projectile
         {
             wavecontrol->fireready = false;
             wavecontrol->firetime = 200;
-            createProjectile(player, &(*projectileArray), renderer);
+            createProjectile(player, projectilelist, renderer);
         }
     }
     else
@@ -129,16 +281,17 @@ void fire(WaveControl *wavecontrol, Controls *input, Creature player, Projectile
         {
             wavecontrol->fireready = false;
             wavecontrol->firetime = 200;
-            createProjectile(player, &(*projectileArray), renderer);
+            createProjectile(player, projectilelist, renderer);
         }
     }
 }
 
-void refreshProjectile(ProjectileArray *projectileArray)
+void refreshProjectile(ProjectileList *first)
 {
-    for (int i = 0; i < projectileArray->scale; i++)
+    ProjectileList *seeker;
+    for (seeker = first; seeker != NULL; seeker = seeker->next)
     {
-        projectileArray->data[i].render.y = projectileArray->data[i].render.y + projectileArray->data[i].speed;
+        seeker->data.render.y = seeker->data.render.y + seeker->data.speed;
     }
 }
 
@@ -154,7 +307,7 @@ bool detectProjectilePath(Creature *enemy, int i)
     return true;
 }
 
-void enemyfire(WaveControl *wavecontrol, Enemies *enemy, ProjectileArray *projectileArray, SDL_Renderer *renderer)
+void enemyfire(WaveControl *wavecontrol, Enemies *enemy, ProjectileList *projectilelist, SDL_Renderer *renderer)
 {
     if (wavecontrol->enemyfireready == true && enemyalive(enemy, 0, 30))
     {
@@ -168,7 +321,7 @@ void enemyfire(WaveControl *wavecontrol, Enemies *enemy, ProjectileArray *projec
             }
 
         }
-        createProjectile(enemy->enemy[i], &(*projectileArray), renderer);
+        createProjectile(enemy->enemy[i], projectilelist, renderer);
         wavecontrol->enemyfireready = false;
     }
 }

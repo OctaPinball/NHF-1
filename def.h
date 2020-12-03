@@ -59,6 +59,12 @@ typedef struct Projectile
     ProjectileType type;
 } Projectile;
 
+typedef struct ProjectileList
+{
+    Projectile data;
+    struct ProjectileList *next;
+} ProjectileList;
+
 typedef struct ProjectileArray
 {
     Projectile *data;

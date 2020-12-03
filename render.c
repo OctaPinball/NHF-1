@@ -43,7 +43,7 @@ void drawhud(WaveControl wavecontrol, TTF_Font *fonts, SDL_Renderer *renderer){
 }
 
 //Minden elem megrajzolása
-void refreshScene(Creature player, Enemies enemy, ProjectileArray projectileArray, SDL_Renderer *renderer)
+void refreshScene(Creature player, Enemies enemy, ProjectileList *first, SDL_Renderer *renderer)
 {
     SDL_RenderClear(renderer);
     //if (player.alive == true)
@@ -55,9 +55,10 @@ void refreshScene(Creature player, Enemies enemy, ProjectileArray projectileArra
             draw(enemy.enemy[i].render, renderer);
         }
     }
-    for (int i = 0; i < projectileArray.scale; i++)
+    ProjectileList *seeker;
+    for (seeker = first; seeker != NULL; seeker = seeker->next)
     {
-        draw(projectileArray.data[i].render, renderer);
+        draw(seeker->data.render, renderer);
     }
 }
 

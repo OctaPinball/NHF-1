@@ -1,11 +1,7 @@
 #include "common.h"
 
-void initiatevariables(ProjectileArray *projectileArray, Creature *player, Enemies *enemystruct, Timers *timers, SDL_Renderer *renderer) //Változók értékadása
+void initiatevariables(Creature *player, Enemies *enemystruct, Timers *timers, SDL_Renderer *renderer) //Változók értékadása
 {
-    //Lövedékek
-    projectileArray->data = (Projectile*) malloc(0 * sizeof(Projectile));
-    projectileArray->scale = 0;
-
     //Játékos
     player->render.x = 704;
     player->render.y = 648;
@@ -42,7 +38,7 @@ void game(State *state){
     sdl_init("SPACE INVADERS", 1280, 784, &window, &renderer, &font);
 
     //Változók létrehozása
-    ProjectileArray projectileArray;
+    ProjectileList *projectilelist = NULL;
     Creature player;
     Enemies enemystruct;
     Timers timers;
@@ -50,25 +46,25 @@ void game(State *state){
     WaveControl wavecontrol = {0, 3, 0, 200, false, false};
 
     //Változók értékadása
-    initiatevariables(&projectileArray, &player, &enemystruct, &timers, renderer);
+    initiatevariables(&player, &enemystruct, &timers, renderer);
 
     while (!input.quit)
     {
-        checkWave(&timers, &enemystruct, &wavecontrol, &projectileArray, renderer);
+        checkWave(&timers, &enemystruct, &wavecontrol, projectilelist, renderer);
 
-        checkEvents(&wavecontrol, &input, &enemystruct, &projectileArray, &player);
+        checkEvents(&wavecontrol, &input, &enemystruct, projectilelist, &player);
 
         movePlayer(input, &player);
 
-        fire(&wavecontrol, &input, player, &projectileArray, renderer);
+        fire(&wavecontrol, &input, player, projectilelist, renderer);
 
-        enemyfire(&wavecontrol, &enemystruct, &projectileArray, renderer);
+        enemyfire(&wavecontrol, &enemystruct, projectilelist, renderer);
 
         refreshTimers(&timers, &wavecontrol);
 
         respawn(&input, &wavecontrol, &player, &timers, renderer);
 
-        refreshScene(player, enemystruct, projectileArray, renderer);
+        refreshScene(player, enemystruct, projectilelist, renderer);
 
         drawhud(wavecontrol, font, renderer);
 
@@ -82,7 +78,7 @@ void game(State *state){
     SDL_RemoveTimer(timers.firetimer);
     SDL_RemoveTimer(timers.enemyfiretimer);
     SDL_RemoveTimer(timers.respawntimer);
-    free(projectileArray.data);
+    freeProjectile(projectilelist);
     sdl_close(&window, &renderer, &font);
     SDL_Quit();
     enterName(wavecontrol);
