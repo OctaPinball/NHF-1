@@ -12,7 +12,7 @@ void freeProjectile(ProjectileList *first)
     }
 }
 
-void deleteProjectile(ProjectileList **first, ProjectileList *backseeker, ProjectileList *seeker)
+void deleteProjectile2(ProjectileList **first, ProjectileList *backseeker, ProjectileList *seeker)
 {
     if (seeker == NULL)             /* nincs ilyen elem */
     {
@@ -29,6 +29,29 @@ void deleteProjectile(ProjectileList **first, ProjectileList *backseeker, Projec
         backseeker->next = seeker->next;
         free(seeker);
     }
+}
+
+ProjectileList *deleteProjectile(ProjectileList *first, ProjectileList *backseeker, ProjectileList *seeker)
+{
+    if (seeker == NULL)             /* nincs ilyen elem */
+    {
+        return first;
+    }
+    if (backseeker == NULL)     /* az első elemet kell törölni */
+    {
+        ProjectileList *ujeleje = seeker->next;
+        free(seeker);
+        return ujeleje;
+    }
+    /* a közepéről/végéről törlünk */
+    backseeker->next = seeker->next;
+    printf("\n\nReszletek");
+    printf("\nspeed: %d", seeker->data.speed);
+    printf("\nx: %d", seeker->data.render.x);
+    printf("\ny: %d", seeker->data.render.y);
+    free(seeker);
+    return first;
+
 }
 
 void autodestroyProjectile(ProjectileList **first)
@@ -114,6 +137,7 @@ void playerhitDetection(ProjectileList **first, Creature *player)
 
 void combinedProjectileDetection2(ProjectileList **first, Enemies *enemy, WaveControl *wavecontrol, Creature *player)
 {
+
     autodestroyProjectile(first);
 
     enemyhitDetection(first, enemy, &(*wavecontrol));
@@ -129,6 +153,20 @@ void combinedProjectileDetection2(ProjectileList **first, Enemies *enemy, WaveCo
     printf("%d\n", i);
 }
 
+void doubledeleteProjectile(ProjectileList **first, ProjectileList *seeker, ProjectileList *backseeker, ProjectileList *seeker_2, ProjectileList *backseeker_2)
+{
+    if (seeker == backseeker_2)
+    {
+        *first = deleteProjectile(*first, backseeker_2, seeker_2);
+        *first = deleteProjectile(*first, backseeker, seeker);
+    }
+    else
+    {
+        *first = deleteProjectile(*first, backseeker, seeker);
+        *first = deleteProjectile(*first, backseeker_2, seeker_2);
+    }
+}
+
 void combinedProjectileDetection(ProjectileList **first, Enemies *enemy, WaveControl *wavecontrol, Creature *player)
 {
     ProjectileList *seeker;
@@ -137,8 +175,9 @@ void combinedProjectileDetection(ProjectileList **first, Enemies *enemy, WaveCon
     {
         if (seeker->data.render.y < -10 || seeker->data.render.y > 720)
         {
-            deleteProjectile(first, backseeker, seeker);
-            break;
+            *first = deleteProjectile(*first, backseeker, seeker);
+            combinedProjectileDetection(first, enemy, wavecontrol, player);
+            return;
         }
         backseeker = seeker;
     }
@@ -152,11 +191,12 @@ void combinedProjectileDetection(ProjectileList **first, Enemies *enemy, WaveCon
             for (int j = 0; j < 30; j++)
                 if (sqrt(pow((double)(seeker->data.render.x - enemy->enemy[j].render.x), (double)(2)) + pow((double)(seeker->data.render.y - enemy->enemy[j].render.y), (double)(2))) < (double)(30) && enemy->enemy[j].alive == true)
                 {
-                    deleteProjectile(first, backseeker, seeker);
+                    *first = deleteProjectile(*first, backseeker, seeker);
                     enemy->enemy[j].alive = false;
                     wavecontrol->score++;
                     seeker = *first;
-                    break;
+                    combinedProjectileDetection(first, enemy, wavecontrol, player);
+                    return;
                 }
         }
         backseeker = seeker;
@@ -174,11 +214,13 @@ void combinedProjectileDetection(ProjectileList **first, Enemies *enemy, WaveCon
             {
                 if(sqrt(pow((double)(seeker->data.render.x - seeker_2->data.render.x), (double)(2)) + pow((double)(seeker->data.render.y - seeker_2->data.render.y), (double)(2))) < (double)(30) && seeker_2->data.type != ship)
                 {
-                    deleteProjectile(first, backseeker, seeker);
-                    deleteProjectile(first, backseeker_2, seeker_2);
+                    doubledeleteProjectile(first, seeker, backseeker, seeker_2, backseeker_2);
+                    //*first = deleteProjectile(*first, backseeker, seeker);
+                    //*first = deleteProjectile(*first, backseeker_2, seeker_2);
                     seeker_2 = *first;
                     seeker = *first;
-                    break;
+                    combinedProjectileDetection(first, enemy, wavecontrol, player);
+                    return;
                 }
                 backseeker_2 = seeker_2;
             }
@@ -193,9 +235,10 @@ void combinedProjectileDetection(ProjectileList **first, Enemies *enemy, WaveCon
         if(sqrt(pow((double)(seeker->data.render.x - player->render.x), (double)(2)) + pow((double)(seeker->data.render.y - player->render.y), (double)(2))) < (double)(16) && player->alive == true && seeker->data.type != ship)
         {
             //player->alive = false;
-            deleteProjectile(first, backseeker, seeker);
+            *first = deleteProjectile(*first, backseeker, seeker);
             seeker = *first;
-            break;
+            combinedProjectileDetection(first, enemy, wavecontrol, player);
+            return;
         }
         backseeker = seeker;
     }
@@ -239,7 +282,6 @@ void createProjectile(Creature creature, ProjectileList **first, SDL_Renderer *r
     {
         /* üres listánál ez lesz az első elem */
         *first = newprojectile;
-        printf("%d %d\n", newprojectile->data.render.x, newprojectile->data.render.y);
     }
     else
     {
@@ -248,7 +290,6 @@ void createProjectile(Creature creature, ProjectileList **first, SDL_Renderer *r
         while (seeker->next != NULL)
             seeker = seeker->next;
         seeker->next = newprojectile;
-        printf("\njej");
     }
 }
 

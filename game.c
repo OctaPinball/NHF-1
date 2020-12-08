@@ -50,7 +50,7 @@ void game(State *state){
 
     while (!input.quit)
     {
-        checkWave(&timers, &enemystruct, &wavecontrol, projectilelist, renderer);
+        checkWave(&timers, &enemystruct, &wavecontrol, &projectilelist, renderer);
 
         checkEvents(&wavecontrol, &input, &enemystruct, &projectilelist, &player);
 
