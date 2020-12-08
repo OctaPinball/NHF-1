@@ -1,6 +1,6 @@
 #include "common.h"
 
-void checkEvents(WaveControl *wavecontrol, Controls *input, Enemies *enemy, ProjectileList *projectilelist, Creature *player){
+void checkEvents(WaveControl *wavecontrol, Controls *input, Enemies *enemy, ProjectileList **projectilelist, Creature *player){
     SDL_Event event;
     while (SDL_PollEvent(&event))
     {
@@ -44,8 +44,8 @@ void checkEvents(WaveControl *wavecontrol, Controls *input, Enemies *enemy, Proj
             input->quit = true;
             break;
         case SDL_USEREVENT:
-            refreshProjectile(projectilelist);
-            combinedProjectileDetection(projectilelist, enemy, wavecontrol);
+            refreshProjectile(*projectilelist);
+            combinedProjectileDetection(projectilelist, enemy, wavecontrol, player);
             break;
         case (SDL_USEREVENT+1):
             moveEnemy(&(*input), &(*enemy));

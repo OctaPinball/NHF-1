@@ -52,13 +52,13 @@ void game(State *state){
     {
         checkWave(&timers, &enemystruct, &wavecontrol, projectilelist, renderer);
 
-        checkEvents(&wavecontrol, &input, &enemystruct, projectilelist, &player);
+        checkEvents(&wavecontrol, &input, &enemystruct, &projectilelist, &player);
 
         movePlayer(input, &player);
 
-        fire(&wavecontrol, &input, player, projectilelist, renderer);
+        fire(&wavecontrol, &input, player, &projectilelist, renderer);
 
-        enemyfire(&wavecontrol, &enemystruct, projectilelist, renderer);
+        enemyfire(&wavecontrol, &enemystruct, &projectilelist, renderer);
 
         refreshTimers(&timers, &wavecontrol);
 
