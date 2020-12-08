@@ -13,6 +13,7 @@ Uint32 projectiletime(Uint32 ms, void *param)
     SDL_Event ev;
     ev.type = SDL_USEREVENT;
     SDL_PushEvent(&ev);
+    printf("tikk");
     return ms;   /* ujabb varakozas */
 }
 

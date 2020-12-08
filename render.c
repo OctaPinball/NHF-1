@@ -13,7 +13,8 @@ void draw(renderValues render, SDL_Renderer *renderer)
 }
 
 //Szöveg texture-é alakítása
-void textdraw(renderValues source ,char *text, TTF_Font *fonts, SDL_Renderer *renderer){
+void textdraw(renderValues source,char *text, TTF_Font *fonts, SDL_Renderer *renderer)
+{
     SDL_Surface *felirat;
 
     SDL_Color feher = {255, 255, 255};
@@ -27,7 +28,8 @@ void textdraw(renderValues source ,char *text, TTF_Font *fonts, SDL_Renderer *re
 }
 
 //Kijelezni kívánt adatok elrendezése
-void drawhud(WaveControl wavecontrol, TTF_Font *fonts, SDL_Renderer *renderer){
+void drawhud(WaveControl wavecontrol, TTF_Font *fonts, SDL_Renderer *renderer)
+{
     renderValues score = {10, 720, NULL};
     renderValues life = {1000, 720, NULL};
     renderValues wave = {600, 720, NULL};
@@ -46,8 +48,7 @@ void drawhud(WaveControl wavecontrol, TTF_Font *fonts, SDL_Renderer *renderer){
 void refreshScene(Creature player, Enemies enemy, ProjectileList *first, SDL_Renderer *renderer)
 {
     SDL_RenderClear(renderer);
-    //if (player.alive == true)
-        draw(player.render, renderer);
+    draw(player.render, renderer);
     for (int i = 0; i < 30; i++)
     {
         if (enemy.enemy[i].alive == true)
@@ -85,7 +86,8 @@ void sdl_init(char const *felirat, int szeles, int magas, SDL_Window **pwindow, 
     }
     TTF_Init();
     TTF_Font *font = TTF_OpenFont("resources/pixel.ttf", 64);
-    if (font == NULL) {
+    if (font == NULL)
+    {
         SDL_Log("Nem sikerult megnyitni a fontot! %s\n", TTF_GetError());
         exit(1);
     }
@@ -96,7 +98,8 @@ void sdl_init(char const *felirat, int szeles, int magas, SDL_Window **pwindow, 
     *prenderer = renderer;
 }
 
-void sdl_close(SDL_Window **pwindow, SDL_Renderer **prenderer, TTF_Font **pfont) {
+void sdl_close(SDL_Window **pwindow, SDL_Renderer **prenderer, TTF_Font **pfont)
+{
     SDL_DestroyRenderer(*prenderer);
     *prenderer = NULL;
 

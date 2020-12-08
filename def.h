@@ -79,6 +79,7 @@ typedef struct WaveControl
     int firetime;
     bool enemyfireready;
     bool fireready;
+    int projectilenumber;
 } WaveControl;
 
 typedef struct Timers

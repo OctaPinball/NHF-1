@@ -43,7 +43,7 @@ void game(State *state){
     Enemies enemystruct;
     Timers timers;
     Controls input = {-1, false, false, false, false};
-    WaveControl wavecontrol = {0, 3, 0, 200, false, false};
+    WaveControl wavecontrol = {0, 3, 0, 200, false, false, 0};
 
     //Változók értékadása
     initiatevariables(&player, &enemystruct, &timers, renderer);

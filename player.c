@@ -20,9 +20,16 @@ void respawn(Controls *input, WaveControl *wavecontrol, Creature *player, Timers
         player->render.texture = loadTexture("resources/ship_dead.png", renderer);
         wavecontrol->life--;
         if (wavecontrol->life != 0)
+        {
+            printf("%d", wavecontrol->life);
             timers->respawntimernewvalue = 3000;
+        }
+
         else
+        {
             input->quit = true;
+        }
+
     }
     if (player->alive == true && timers->respawntimermemory != 0)
     {
