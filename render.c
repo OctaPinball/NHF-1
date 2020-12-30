@@ -1,4 +1,5 @@
 #include "common.h"
+#include "debugmalloc.h"
 
 //Tárgy megrajzolása
 void draw(renderValues render, SDL_Renderer *renderer)
@@ -63,8 +64,7 @@ void refreshScene(Creature player, Enemies enemy, ProjectileList *first, SDL_Ren
     }
 }
 
-
-
+//SDL ablak letrehozasa
 void sdl_init(char const *felirat, int szeles, int magas, SDL_Window **pwindow, SDL_Renderer **prenderer, TTF_Font **pfont)
 {
     if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
@@ -98,6 +98,7 @@ void sdl_init(char const *felirat, int szeles, int magas, SDL_Window **pwindow, 
     *prenderer = renderer;
 }
 
+//SDL bezarasa
 void sdl_close(SDL_Window **pwindow, SDL_Renderer **prenderer, TTF_Font **pfont)
 {
     SDL_DestroyRenderer(*prenderer);
@@ -112,6 +113,7 @@ void sdl_close(SDL_Window **pwindow, SDL_Renderer **prenderer, TTF_Font **pfont)
     SDL_Quit();
 }
 
+//Texture betoltese
 SDL_Texture *loadTexture(char *filename, SDL_Renderer *renderer)
 {
     SDL_Texture *texture;

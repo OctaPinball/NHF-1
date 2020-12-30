@@ -1,6 +1,7 @@
 ﻿#include "common.h"
+#include "debugmalloc.h"
 
-
+//Fofuggveny: program inditasa
 int main(int argc, char *argv[])
 {
     State state = inmenu;

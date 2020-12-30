@@ -24,6 +24,5 @@
 #include "menu.h"
 #include "game.h"
 
-#include "debugmalloc.h"
 
 #endif // COMMON_H_INCLUDED

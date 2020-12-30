@@ -1,19 +1,23 @@
 #include "common.h"
+#include "debugmalloc.h"
 
-
+//Lovedek lista felszabaditasa
 void freeProjectile(ProjectileList *first)
 {
     ProjectileList *seeker = first;
     while (seeker != NULL)
     {
+        SDL_DestroyTexture(seeker->data.render.texture);
         ProjectileList *next_ptr = seeker->next;
         free(seeker);
         seeker = next_ptr;
     }
 }
 
+//Egy lovedek torlese
 void deleteProjectile(ProjectileList **first, ProjectileList *backseeker, ProjectileList *seeker)
 {
+    SDL_DestroyTexture(seeker->data.render.texture);
     if (seeker == NULL)             /* nincs ilyen elem */
     {
         /* nincs teendő */
@@ -31,6 +35,7 @@ void deleteProjectile(ProjectileList **first, ProjectileList *backseeker, Projec
     }
 }
 
+//Ket lovedek torlese (kulonleges eset)
 void doubledeleteProjectile(ProjectileList **first, ProjectileList *seeker, ProjectileList *backseeker, ProjectileList *seeker_2, ProjectileList *backseeker_2)
 {
     if (seeker == backseeker_2)
@@ -45,9 +50,9 @@ void doubledeleteProjectile(ProjectileList **first, ProjectileList *seeker, Proj
     }
 }
 
+//Automatikus lovedektorles: amikor a lovedek elhagyja a jatekteret
 void autodestroyProjectile(ProjectileList **first)
 {
-    //ProjectileList *seeker;
     ProjectileList *backseeker = NULL;
     for (ProjectileList *seeker = *first; seeker != NULL; seeker = seeker->next)
     {
@@ -60,6 +65,7 @@ void autodestroyProjectile(ProjectileList **first)
     }
 }
 
+//Ellenfel eltalalasanak erzekelese
 void enemyhitDetection(ProjectileList **first, Enemies *enemy, WaveControl *wavecontrol)
 {
     ProjectileList *seeker;
@@ -82,6 +88,7 @@ void enemyhitDetection(ProjectileList **first, Enemies *enemy, WaveControl *wave
     }
 }
 
+//Lovedekek utkozesenek vizsgalata
 void projectilecollisionDetection(ProjectileList **first)
 {
     ProjectileList *seeker;
@@ -108,6 +115,7 @@ void projectilecollisionDetection(ProjectileList **first)
     }
 }
 
+//Jatekos eltalalasanak vizsgalata
 void playerhitDetection(ProjectileList **first, Creature *player)
 {
     ProjectileList *seeker;
@@ -125,6 +133,7 @@ void playerhitDetection(ProjectileList **first, Creature *player)
     }
 }
 
+//Lovedektalalatok erzekelese
 void combinedProjectileDetection(ProjectileList **first, Enemies *enemy, WaveControl *wavecontrol, Creature *player)
 {
     autodestroyProjectile(first);
@@ -136,7 +145,7 @@ void combinedProjectileDetection(ProjectileList **first, Enemies *enemy, WaveCon
     playerhitDetection(first, player);
 }
 
-
+//Lovedek letrehozasa
 void createProjectile(Creature creature, ProjectileList **first, SDL_Renderer *renderer)
 {
     ProjectileList *newprojectile = (ProjectileList*) malloc(sizeof(ProjectileList));
@@ -173,12 +182,10 @@ void createProjectile(Creature creature, ProjectileList **first, SDL_Renderer *r
 
     if (*first == NULL)
     {
-        /* üres listánál ez lesz az első elem */
         *first = newprojectile;
     }
     else
     {
-        /* ha nem üres a lista, az utolsó után fűzzük */
         ProjectileList *seeker = *first;
         while (seeker->next != NULL)
             seeker = seeker->next;
@@ -186,9 +193,9 @@ void createProjectile(Creature creature, ProjectileList **first, SDL_Renderer *r
     }
 }
 
+//Jatekos lovedek kilovese
 void fire(WaveControl *wavecontrol, Controls *input, Creature player, ProjectileList **projectilelist, SDL_Renderer *renderer)
 {
-
     if (input->autofire == 1)
     {
         if (wavecontrol->fireready)
@@ -209,6 +216,7 @@ void fire(WaveControl *wavecontrol, Controls *input, Creature player, Projectile
     }
 }
 
+//Lovedekek frissitese eggyel
 void refreshProjectile(ProjectileList *first)
 {
     ProjectileList *seeker;
@@ -218,6 +226,7 @@ void refreshProjectile(ProjectileList *first)
     }
 }
 
+//Ellenfelek tiszta loveslehetosegenek vizsgalata
 bool detectProjectilePath(Creature *enemy, int i)
 {
     i+=10;
@@ -230,6 +239,7 @@ bool detectProjectilePath(Creature *enemy, int i)
     return true;
 }
 
+//Ellenfelek tuzelese
 void enemyfire(WaveControl *wavecontrol, Enemies *enemy, ProjectileList **projectilelist, SDL_Renderer *renderer)
 {
     if (wavecontrol->enemyfireready == true && enemyalive(enemy, 0, 30))

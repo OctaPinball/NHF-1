@@ -1,4 +1,5 @@
 #include "common.h"
+#include "debugmalloc.h"
 
 
 //Játékos mozgatása
@@ -15,25 +16,18 @@ void movePlayer(Controls input, Creature *player){
 
 //Játékos újraélesztése
 void respawn(Controls *input, WaveControl *wavecontrol, Creature *player, Timers *timers, SDL_Renderer *renderer){
-    if (player->alive == false && timers->respawntimermemory == 0)
+    if (player->alive == false && wavecontrol->inrespawn == false)
     {
         player->render.texture = loadTexture("resources/ship_dead.png", renderer);
         wavecontrol->life--;
         if (wavecontrol->life != 0)
-        {
-            printf("%d", wavecontrol->life);
-            timers->respawntimernewvalue = 3000;
-        }
-
+            wavecontrol->inrespawn = true;
         else
-        {
             input->quit = true;
-        }
-
     }
-    if (player->alive == true && timers->respawntimermemory != 0)
+    if (player->alive == true &&wavecontrol->inrespawn == true)
     {
         player->render.texture = loadTexture("resources/ship.png", renderer);
-        timers->respawntimernewvalue = 0;
+        wavecontrol->inrespawn = false;
     }
 }

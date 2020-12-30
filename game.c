@@ -1,5 +1,7 @@
 #include "common.h"
+#include "debugmalloc.h"
 
+//Jatek valtozoinak ertekadasa
 void initiatevariables(Creature *player, Enemies *enemystruct, Timers *timers, SDL_Renderer *renderer) //Változók értékadása
 {
     //Játékos
@@ -29,6 +31,7 @@ void initiatevariables(Creature *player, Enemies *enemystruct, Timers *timers, S
     timers->respawntimermemory = 0;
 }
 
+//Jatek szimulaciojanak inditasa
 void game(State *state){
     srand(time(0));
     /* ablak letrehozasa */
@@ -43,7 +46,7 @@ void game(State *state){
     Enemies enemystruct;
     Timers timers;
     Controls input = {-1, false, false, false, false};
-    WaveControl wavecontrol = {0, 3, 0, 200, false, false, 0};
+    WaveControl wavecontrol = {0, 3, 0, 200, false, false, false};
 
     //Változók értékadása
     initiatevariables(&player, &enemystruct, &timers, renderer);

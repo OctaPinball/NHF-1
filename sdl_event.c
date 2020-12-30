@@ -1,14 +1,9 @@
 #include "common.h"
+#include "debugmalloc.h"
 
+//SDL eventek vizsgalata
 void checkEvents(WaveControl *wavecontrol, Controls *input, Enemies *enemy, ProjectileList **projectilelist, Creature *player){
-    wavecontrol->projectilenumber++;
     SDL_Event event;
-    if (wavecontrol->projectilenumber == 5)
-    {
-            refreshProjectile(*projectilelist);
-            combinedProjectileDetection(projectilelist, enemy, wavecontrol, player);
-            wavecontrol->projectilenumber = 0;
-    }
     while (SDL_PollEvent(&event))
     {
         switch (event.type)
@@ -51,8 +46,8 @@ void checkEvents(WaveControl *wavecontrol, Controls *input, Enemies *enemy, Proj
             input->quit = true;
             break;
         case SDL_USEREVENT:
-            //refreshProjectile(*projectilelist);
-            //combinedProjectileDetection(projectilelist, enemy, wavecontrol, player);
+            refreshProjectile(*projectilelist);
+            combinedProjectileDetection(projectilelist, enemy, wavecontrol, player);
             break;
         case (SDL_USEREVENT+1):
             moveEnemy(&(*input), &(*enemy));

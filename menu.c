@@ -1,5 +1,7 @@
 #include "common.h"
+#include "debugmalloc.h"
 
+//Egermutato a gombon valo vizsgalata
 ButtonType buttonDetect(SDL_Event event)
 {
     if (event.button.x > 350 &&  event.button.x < 930 &&event.button.y > 328 && event.button.y < 392)
@@ -12,6 +14,7 @@ ButtonType buttonDetect(SDL_Event event)
 
 }
 
+//Menu letrehozasa
 void menu(State *state)
 {
     SDL_Window *window;

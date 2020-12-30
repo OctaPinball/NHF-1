@@ -1,5 +1,7 @@
 #include "common.h"
+#include "debugmalloc.h"
 
+//Tomb teljes felszabaditasa
 void freearray(char **names, int size){
     for (int i = 0; i < size; i++)
         free(names[i]);
@@ -58,7 +60,7 @@ void bubblesort(char **names, int size, int *scores)
     }
 }
 
-
+//Dicsoseglista rendezese
 void sortScoreboard(char *newname, int newscore)
 {
     int *scores = (int*)malloc(0 * sizeof(int));
@@ -223,6 +225,7 @@ bool input_text(char *dest, size_t hossz, SDL_Rect teglalap, SDL_Color hatter, S
     return enter;
 }
 
+//Jatekos beirhatja a nevet
 void enterName(WaveControl wavecontrol)
 {
     SDL_Window *window;
@@ -236,10 +239,12 @@ void enterName(WaveControl wavecontrol)
     char playername[30];
     int playerscore = wavecontrol.score;
     input_text(playername, 30, r, fekete, feher, font, renderer);
-
+    if (strlen(playername) == 0)
+        return;
     sortScoreboard(playername, playerscore);
 }
 
+//Dicsoseglista ablakanak megjelenitese
 void showleaderboard(State *state)
 {
     SDL_Window *window;
@@ -286,4 +291,5 @@ void showleaderboard(State *state)
                 break;
             }
     }
+
 }

@@ -1,4 +1,5 @@
 #include "common.h"
+#include "debugmalloc.h"
 
 //Wave alapállapotbahelyezés, változók reset
 void resetWave(Timers *timers, Enemies *enemy, WaveControl *wavecontrol, ProjectileList **first, SDL_Renderer *renderer)

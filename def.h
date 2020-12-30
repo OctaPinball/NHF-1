@@ -79,7 +79,7 @@ typedef struct WaveControl
     int firetime;
     bool enemyfireready;
     bool fireready;
-    int projectilenumber;
+    bool inrespawn;
 } WaveControl;
 
 typedef struct Timers
@@ -94,7 +94,6 @@ typedef struct Timers
     int enemyfiretimernewvalue;
     SDL_TimerID respawntimer;
     int respawntimermemory;
-    int respawntimernewvalue;
 } Timers;
 
 typedef struct Controls

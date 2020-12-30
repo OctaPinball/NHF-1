@@ -1,19 +1,19 @@
 #include "common.h"
-
-Uint32 movetime(Uint32 ms, void *param)
-{
-    SDL_Event ev;
-    ev.type = SDL_USEREVENT+1;
-    SDL_PushEvent(&ev);
-    return ms;   /* ujabb varakozas */
-}
+#include "debugmalloc.h"
 
 Uint32 projectiletime(Uint32 ms, void *param)
 {
     SDL_Event ev;
     ev.type = SDL_USEREVENT;
     SDL_PushEvent(&ev);
-    printf("tikk");
+    return ms;   /* ujabb varakozas */
+}
+
+Uint32 movetime(Uint32 ms, void *param)
+{
+    SDL_Event ev;
+    ev.type = SDL_USEREVENT+1;
+    SDL_PushEvent(&ev);
     return ms;   /* ujabb varakozas */
 }
 
@@ -41,8 +41,10 @@ Uint32 respawntime(Uint32 ms, void *param)
     return ms;   /* ujabb varakozas */
 }
 
+//Idozitok valtoztatasa uj idoertekre
 void refreshTimers(Timers *timers, WaveControl *wavecontrol)
 {
+
     if (timers->refreshWaveTimers == true)
     {
         SDL_RemoveTimer(timers->movetimer);
@@ -57,10 +59,14 @@ void refreshTimers(Timers *timers, WaveControl *wavecontrol)
     timers->firetimer = SDL_AddTimer(wavecontrol->firetime, firetime, NULL);
     timers->firetimermemory = wavecontrol->firetime;
     }
-    if(timers->respawntimernewvalue != timers->respawntimermemory)
+    if(wavecontrol->inrespawn == true && timers->respawntimermemory == 0)
+    {
+        timers->respawntimer = SDL_AddTimer(3000, respawntime, NULL);
+        timers->respawntimermemory = 3000;
+    }
+    if(wavecontrol->inrespawn == false && timers->respawntimermemory == 3000)
     {
         SDL_RemoveTimer(timers->respawntimer);
-        timers->respawntimer = SDL_AddTimer(timers->respawntimernewvalue, respawntime, NULL);
-        timers->respawntimermemory = timers->respawntimernewvalue;
+        timers->respawntimermemory = 0;
     }
 }
